@@ -1,0 +1,25 @@
+---
+title: "Purpose of the BananaTracker"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## GitHub Documents
+
+This is a tool for tracing and tracking plant transgenic events and for efficient handling of data generated from large-scale transformation projects that are expected to lead to GM product release, e.g. the QUT-BIRAC project.
+
+It has core administration modules, data entry modules and biological entity tracing modules for Vector management, Explant management, Transformation Event Management, Plant/Progeny Management (from lab to field) and Phenotype Data Management. 
+
+All modules have a query function and there is an overarching module for tracing each biological entity in the transgenic generation and product development pipeline. It manages, preserves and tracks large inventories of transgenic germplasm and enables efficient and accurate record keeping of the large quantities of experimental data. 
+
+It automates and seamlessly integrates multi-step experimental processes. It also incorporates label-making utilities, enabling accurate labelling of plant tissue culture vessels and plants, all the way from tissue culture through to the field. 
+
+One special feature of the software is its ability to enforce data quality, regulatory compliance and consistency through in-built error-checking, based on lab procedures. 
+
+It provides a “single source of truth” through centralised data storage. QUTracker supports all generic GM event generation and product development processes and can be readily adapted to different crops. Banana Tracker is QUTracker modified for banana specific projects.
+
+
+<em> Dr (Ms) Harjeet Khanna</em>
