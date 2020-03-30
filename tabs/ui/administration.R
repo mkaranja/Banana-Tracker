@@ -27,7 +27,7 @@ administration <- tabPanel("ADMINISTRATION",
                                                                  column(4, offset = 1,
                                                                         uiOutput("edit_user_info_Details_Output")
                                                                         ),
-                                                                 column(4, br(),br(),br(),
+                                                                 column(4, br(),# br(),br(),
                                                                         h4("Working Projects"),
                                                                         uiOutput("edit_user_info_Projects_Output")
                                                                         )

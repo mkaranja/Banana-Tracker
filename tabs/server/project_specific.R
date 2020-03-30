@@ -2,6 +2,8 @@ tab_files1 <- list.files(path = "tabs/server/project_specific/data_form/vector_i
 suppressMessages(lapply(tab_files1, source))
 tab_files2 <- list.files(path = "tabs/server/project_specific/data_form/plant_information_module", full.names = T, recursive = T)
 suppressMessages(lapply(tab_files2, source))
+tab_files3 <- list.files(path = "tabs/server/project_specific/administration", full.names = T, recursive = T)
+suppressMessages(lapply(tab_files3, source))
 
 assigned_projects <- reactive({
   username <- input$username
@@ -89,6 +91,8 @@ observeEvent(input$plant_information_module, {
 #   updateSelectInput(session, "general_plant_data_FieldTrialPlantID", "", choices = dt$FieldTrialPlantID)
 # })
 ## 2. -------------------------ADMINISTRATION -------------------------------------
+
+source("tabs/server/project_specific/administration.R", local=T)
 
 ## 3. -------------------------REPORTS --------------------------------------------
 

@@ -53,35 +53,50 @@ project_selection <-
                  br(), br(), 
                  fluidRow(
                    
-                   column(12, align = "center",br(), br(), br(),br(),
+                   column(12, align = "center",
                           
-                          div(style = "text-align: center;", 
-                              div(style = "text-align: center;", 
+                        panel_div(class_type = "default",
+                                  content = tags$div(
+                            column(12,
+                                   column(3,
+                                          actionBttn("project_specific_admin_BacterialSelection", label = "Bacterial Selection",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                          actionBttn("project_specific_admin_Gene", label = "Gene",  style = "unite", size = "md", color = "primary", block=T)
+                                          ),
+                                   column(3,
+                                          actionBttn("project_specific_admin_PlantSelection", label = "Plant Selection",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                          actionBttn("project_specific_admin_Terminator", label = "Terminator",  style = "unite", size = "md", color = "primary", block=T)
+                                   ),
+                                   column(3,
+                                          actionBttn("project_specific_admin_Backbone", label = "Backbone",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                          actionBttn("project_specific_admin_Strain", label = "Strain",  style = "unite", size = "md", color = "primary", block=T)
+                                   ),
+                                   column(3,
+                                          actionBttn("project_specific_admin_Promoter", label = "Promoter",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                          actionBttn("project_specific_admin_NewFeature", label = "New Feature",  style = "unite", size = "md", color = "primary", block=T),
+                                   )
+                            )
+                            )), br(),br(),
+                            panel_div(class_type = "default",
+                                content = tags$div(
                                   column(12,
-                                         column(3,
-                                                actionBttn("project_specific_admin_IdentityType", label = "Identity Type",  style = "unite", size = "md", color = "primary", block=T)),
-                                         column(3,
-                                                actionBttn("project_specific_admin_Cultivar", label = "Cultivar",  style = "unite", size = "md", color = "primary", block=T)),
-                                         column(3,
-                                                actionBttn("project_specific_admin_Source", label = "Source",  style = "unite", size = "md", color = "primary", block=T)),
-                                         column(3,
-                                                actionBttn("project_specific_admin_PermitType", label = "Permit Type",  style = "unite", size = "md", color = "primary", block=T))
-                                  ), br(),br(),br(),br(),
-                                  column(12,
-                                         
                                          column(4,
-                                                actionBttn("project_specific_admin_Media", label = "Media",  style = "unite", size = "md", color = "primary", block=T)),
+                                                actionBttn("project_specific_admin_AgrobacteriumStrains", label = "Agrobacterium Strains",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                                actionBttn("project_specific_admin_FieldTrialIdentity", label = "Field Trial Identity",  style = "unite", size = "md", color = "primary", block=T)
+                                         ),
                                          column(4,
-                                                actionBttn("project_specific_admin_Additives", label = "Additives",  style = "unite", size = "md", color = "primary", block=T)),
+                                                actionBttn("project_specific_admin_DeploymentLocation", label = "Deployment Location",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                                actionBttn("project_specific_admin_Phenotype", label = "Phenotype",  style = "unite", size = "md", color = "primary", block=T)
+                                         ),
                                          column(4,
-                                                actionBttn("project_specific_admin_CulturedBy", label = "Cultured By",  style = "unite", size = "md", color = "primary", block=T))
-                                  )
-                                  
-                              ) 
-                              
-                          )
+                                                actionBttn("project_specific_admin_GlassHouseTrialID", label = "Glass House Trial ID",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
+                                                disabled(actionBttn("project_specific_admin_DIRLicence", label = "DIR Licence",  style = "unite", size = "md", color = "primary", block=T))
+                                         )
+                              ))
+                            
+                        ) 
+                        
+                    )
                    )
-                 )
                  ),
         tabPanel("Reports"),
         tabPanel("User Details")
