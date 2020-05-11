@@ -19,7 +19,6 @@ observeEvent(input$culture_initiation_module,{
      search_culture_initiation,
      new_culture_initiation,
      updating_last_subculture
-     
    ),easyClose = F, size = "l"
  ))
  
@@ -300,6 +299,9 @@ observeEvent(input$new_culture_initiation_Exit, {
    )
 })
 
+
+
+
 #****************************************************** 2. Search Culture Initiation ****************************************************************************
 
 search_culture_initiation_ResultsTable_Input <- reactive({
@@ -573,9 +575,8 @@ search_culture_initiation_Culture_Form_Data <- reactive({
  
  observeEvent(input$updating_last_subculture_LoadData,{
     
-    update_last_subculture_values$Data <- update_last_subculture_cultures_input()
-    dt <- update_last_subculture_values$Data
-     
+    dt <- update_last_subculture_values$Data <- update_last_subculture_cultures_input()
+    
      updateNumericInput(session, "updating_last_subculture_NumberOfCultures", "Number of Cultures", value = dt$NumberOfCultures)
      updateDateInput(session, "updating_last_subculture_DateOfCulture", "Date of Culture", value = update_last_subculture_input()$DateOfStarterCulture)
      updateSelectInput(session, 'updating_last_subculture_CulturedBy', "Cultured By", choices = c(update_last_subculture_cultures_input()$CulturedBy), selected = update_last_subculture_cultures_input()$CulturedBy)
@@ -640,7 +641,7 @@ search_culture_initiation_Culture_Form_Data <- reactive({
         type = "warning",
         showCancelButton = TRUE,
         confirmButtonCol = '#DD6B55',
-        confirmButtonText = 'Yes, clear!'
+        confirmButtonText = 'Yes, Exit!'
      )
   })
   

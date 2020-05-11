@@ -9,10 +9,9 @@ cultures <- tbl(pool,"tblCultures") %>% collect()
 
 culture_initiation_reports <- 
   tabPanel(tags$h2(style="color:#FF6347;text-align:center;","Culture Initiation Reports"), value = "culture_initiation_reports",
-        div(id = "culture_initiation_reports_Form",
             
            column(12, br(), br(),
-                                      
+              div(id = "culture_initiation_reports_Form",                   
                 fluidRow(
                     column(2, selectInput("culture_initiation_reports_ExplantIdentify", "Explant Identify", choices = c('', mfc$ExplantIdentity), width = "100%")),
                     column(2, selectInput("culture_initiation_reports_Source", "Source", choices = c('', mfc$Source), width = "100%")),
@@ -33,8 +32,8 @@ culture_initiation_reports <-
                 fluidRow(
                     column(2, uiOutput("culture_initiation_reports_SelectTheFields_Output")),
                     column(9, br(), rHandsontableOutput("culture_initiation_reports_ResultsTable"))
+                )
                 ),
-                verbatimTextOutput("dd"),
                 fluidRow(
                     column(2, actionBttn("culture_initiation_reports_LoadData", "Load Data", size = "xs", style = "jelly", color = "primary", block=T)),
                     column(2, downloadBttn("culture_initiation_reports_ExportToExcel", "Export to Excel", size = "xs", style = "bordered", color = "primary", block=T)),
@@ -43,5 +42,4 @@ culture_initiation_reports <-
                     column(2, offset = 1, actionBttn("culture_initiation_reports_FormToPicture", "Form to Picture", size = "xs", style = "jelly", color = "primary", block=T))
                 )
            )
-)
 )

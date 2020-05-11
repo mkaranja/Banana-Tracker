@@ -1,4 +1,4 @@
-search_CSC <- 
+search_cell_suspension_culture <- 
   tabPanel("Search CSC", value = "search_CSC",
            br(), br(),             
        fluidRow(
@@ -48,5 +48,10 @@ search_CSC <-
                 column(7, textInput("search_CSC_Comments", "", width = "100%"))
                 
          )
+       ), hr(),
+       fluidRow(
+         column(2, offset = 6,  actionBttn("search_CSC_FormToPicture", "Form To Picture", style = "fill", size = "xs", color = "success")),
+         column(3, actionBttn("search_CSC_MFC_SPC_CSC_ControlForm", "MFC, SPC and CSC Control Form", style = "fill", size = "xs", color = "warning")),
+         column(1, actionBttn("search_CSC_Exit", "Exit", style = "fill", size = "xs", color = "danger"))
        )
 )

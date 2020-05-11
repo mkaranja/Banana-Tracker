@@ -11,13 +11,13 @@ admin_IdentityType_Modal <-  function(text){
                     column(10, offset = 1,
                            rHandsontableOutput("admin_IdentityType_Table", height = "200px"), 
                            tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
-                           column(3, textInput("admin_IdentityType_AddNewIdentityType", "Identity Type", value = "", width = "100%")),
-                           column(6, textInput("admin_IdentityType_AddNewDescription", "Description",value = "", width = "100%")),
+                           column(3, textInput("admin_IdentityType_AddNewIdentityType", "Identity Type", width = "100%")),
+                           column(6, textInput("admin_IdentityType_AddNewDescription", "Description", width = "100%")),
                            column(2, br(), actionBttn("admin_IdentityType_AddNewIdentityType", "Add New Identity Type", style = "jelly", size = "xs", color = "primary", block=T))
                     ),
                     column(10, offset = 1, 
-                           column(3, disabled(textInput("admin_IdentityType_UpdateIdentityType", "", value = "", width = "100%"))),
-                           column(6, textInput("admin_IdentityType_UpdateDescription", "", value="", width = "100%")),
+                           column(3, disabled(textInput("admin_IdentityType_UpdateIdentityType", "", width = "100%"))),
+                           column(6, textInput("admin_IdentityType_UpdateDescription", "", width = "100%")),
                            column(2, br(), actionBttn("admin_IdentityType_UpdateIdentityType", "Update the Identity Type", style = "jelly", size = "xs", color = "primary", block=T))
                     )
                   )
@@ -91,7 +91,7 @@ observeEvent(input$admin_IdentityType_UpdateIdentityType,{
 
 observeEvent(input$admin_IdentityType_AddNewIdentityType,{
   req(input$admin_IdentityType_AddNewIdentityType)
-  dt <- CV$Data <- loadIdentityType()
+  dt <- CV$Data <- loadIdentityType()# admin_IdentityType_AddNewIdentityType
   df <- data.frame(IdentityType = input$admin_IdentityType_AddNewIdentityType, Description = input$admin_IdentityType_AddNewDescription)
   if((df$IdentityType %in% dt$IdentityType)==TRUE){
     shinyalert("Oops!", "IdentityType Exists", type = "error")

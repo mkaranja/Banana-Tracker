@@ -34,8 +34,8 @@ culture_initiation_reports_Input <- reactive({
   
   dt <- mfc %>%
     left_join(cultures) %>%
-    select(ExplantIdentity, ExplantIdentityType, Cultivar, Source, DateOfStarterCulture, 
-           Media, Additives, LabBookNumber, PageNumber, VirusIndexedDate, VirusIndexedBy, 
+    select(ExplantIdentity, ExplantIdentityType, Cultivar, CultivarConfirmed, Source, DateOfStarterCulture, 
+           Media, Additives, LabBookNumber, PageNumber,VirusIndexed, VirusIndexedDate, VirusIndexedBy, 
            NumberOfCultures, DateOfCulture, CulturedBy,  MediaForCultures, AdditivesForCultures, 
            LabBookNumberForCultures, PageNumberForCultures, Comments)
   
@@ -133,7 +133,7 @@ output$culture_initiation_reports_ExportToExcel <- downloadHandler(
 # Clear Reports
 
 observeEvent(input$culture_initiation_reports_Clear,{
-  reset('culture_initiation_reports_Form')
+  reset("culture_initiation_reports_Form")
   updatePrettyCheckboxGroup(session = session, inputId = "culture_initiation_reports_SelectTheFields", selected = NULL)
 }, ignoreNULL = FALSE)
 
@@ -241,7 +241,7 @@ output$cell_suspension_culture_reports_ExportToExcel <- downloadHandler(
 # Clear Reports
 
 observeEvent(input$cell_suspension_culture_reports_Clear,{
-  reset('cell_suspension_culture_reports_Form')
+  reset("cell_suspension_culture_reports_Form")
   updatePrettyCheckboxGroup(session = session, inputId = "cell_suspension_culture_reports_SelectTheFields", selected = NULL)
 }, ignoreNULL = FALSE)
 

@@ -11,10 +11,10 @@ csc <- tbl(pool,"tblCSC") %>%
 
 cell_suspension_culture_reports <- 
   tabPanel(tags$h2(style="color:#FF6347;text-align:center;","Cell Suspension Culture Reports"), value = "cell_suspension_culture_reports",
-           div(id = "cell_suspension_culture_reports_Form",
+           
                
                column(12,br(), br(),
-                      
+                  div(id = "cell_suspension_culture_reports_Form",    
                       fluidRow(
                         column(2, selectInput("cell_suspension_culture_reports_ExplantIdentify", "Explant Identify", choices = c('', csc$ExplantIdentity), width = "100%")),
                         column(2, selectInput("cell_suspension_culture_reports_CSCIdentity", "CSC Identity", choices = c('',csc$CSCIdentity), width = "100%")),
@@ -34,6 +34,7 @@ cell_suspension_culture_reports <-
                       fluidRow(
                         column(2, uiOutput("cell_suspension_culture_reports_SelectTheFields_Output")),
                         column(9, br(), rHandsontableOutput("cell_suspension_culture_reports_ResultsTable"))
+                      )
                       ),
                       verbatimTextOutput("dd2"),
                       fluidRow(
@@ -44,5 +45,4 @@ cell_suspension_culture_reports <-
                         column(2, offset = 1, actionBttn("cell_suspension_culture_reports_FormToPicture", "Form to Picture", size = "xs", style = "jelly", color = "primary", block=T))
                       )
                )
-           )
   )

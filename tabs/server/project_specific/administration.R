@@ -1,4 +1,5 @@
-
+tab_files <- list.files(path = "tabs/server/project_specific/administration", full.names = T, recursive = T)
+suppressMessages(lapply(tab_files, source))
 ## --------------------------------------------Agrobacteriom Strains ----------------------------------------------------
 
 observeEvent(input$project_specific_admin_AgrobacteriumStrains, {
@@ -14,7 +15,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains, {
 ## reactive values
 
 loadAgrobacteriumStrains <- reactive({
-  tb <- paste0(input$project_selection_selected, "_tblAgrobacteriumStrains")
+  tb <- paste0(input$project_selected, "_tblAgrobacteriumStrains")
   pool %>% tbl(tb) %>% collect()
 })
 
@@ -46,7 +47,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_Update,{
   id=input$project_specific_admin_AgrobacteriumStrains_UpdateAgrobacteriumStrains
   col="Description"
   value=input$project_specific_admin_AgrobacteriumStrains_UpdateDescription
-  tb <- paste0("IBBTV", "_tblAgrobacteriumStrains")
+  tb <- paste0(input$project_selected, "_tblAgrobacteriumStrains")
   
   sql <- paste("UPDATE",tb,"SET Description = ?value WHERE AgrobacteriumStrains = ?id1;")
   query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -66,13 +67,15 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_AddNew,{
   req(input$project_specific_admin_AgrobacteriumStrains_AddNewAgrobacteriumStrains)
   dt <- AgrobacteriumStrainsCV$Data <- loadAgrobacteriumStrains()
   df <- data.frame(AgrobacteriumStrains = input$project_specific_admin_AgrobacteriumStrains_AddNewAgrobacteriumStrains, Description = input$project_specific_admin_AgrobacteriumStrains_AddNewDescription)
-  tb <- paste0(input$project_selection_selected,"_tblAgrobacteriumStrains")
+  tb <- paste0(input$project_selected,"_tblAgrobacteriumStrains")
   if((df$AgrobacteriumStrains %in% dt$AgrobacteriumStrains)==TRUE){
     shinyalert("Oops!", "AgrobacteriumStrains Exists", type = "error")
   }else {
     dbWriteTable(pool, tb, df, append = T)
     shinyalert("Success!", "Agrobacterium Strains Added", type = "success")
   }
+  # Reset the Form
+  reset("project_specific_admin_AgrobacteriumStrains_Form")
 })
 
 
@@ -118,7 +121,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  ## reactive values
  
  loadBackbone <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblBackbone")
+   tb <- paste0(input$project_selected, "_tblBackbone")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -152,6 +155,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_Backbone_UpdateBackbone
    col="Description"
    value=input$project_specific_admin_Backbone_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblBackbone")
    
    sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Backbone = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -171,13 +175,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_Backbone_AddNewBackbone)
    dt <- BackboneCV$Data <- loadBackbone()
    df <- data.frame(Backbone = input$project_specific_admin_Backbone_AddNewBackbone, Description = input$project_specific_admin_Backbone_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblBackbone")
+   tb <- paste0(input$project_selected,"_tblBackbone")
    if((df$Backbone %in% dt$Backbone)==TRUE){
      shinyalert("Oops!", "Backbone Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "Backbone Added", type = "success")
    }
+   reset("project_specific_admin_Backbone_Form")
  })
  
  
@@ -224,7 +229,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  ## reactive values
  
  loadBacterialSelection <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblBacterialSelection")
+   tb <- paste0(input$project_selected, "_tblBacterialSelection")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -258,6 +263,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_BacterialSelection_UpdateBacterialSelection
    col="Description"
    value=input$project_specific_admin_BacterialSelection_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblBacterialSelection")
    
    sql <- paste("UPDATE ",tb," SET Description = ?value WHERE BacterialSelection = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -277,13 +283,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_BacterialSelection_AddNewBacterialSelection)
    dt <- BacterialSelectionCV$Data <- loadBacterialSelection()
    df <- data.frame(BacterialSelection = input$project_specific_admin_BacterialSelection_AddNewBacterialSelection, Description = input$project_specific_admin_BacterialSelection_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblBacterialSelection")
+   tb <- paste0(input$project_selected,"_tblBacterialSelection")
    if((df$BacterialSelection %in% dt$BacterialSelection)==TRUE){
      shinyalert("Oops!", "BacterialSelection Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "BacterialSelection Added", type = "success")
    }
+   reset("project_specific_admin_BacterialSelection_Form")
  })
  
  
@@ -329,7 +336,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  ## reactive values
  
  loadDeploymentLocation <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblDeploymentLocation")
+   tb <- paste0(input$project_selected, "_tblDeploymentLocation")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -363,6 +370,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_DeploymentLocation_UpdateDeploymentLocation
    col="Description"
    value=input$project_specific_admin_DeploymentLocation_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblDeploymentLocation")
    
    sql <- paste("UPDATE",tb,"SET Description = ?value WHERE DeploymentLocation = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -382,13 +390,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_DeploymentLocation_AddNewDeploymentLocation)
    dt <- DeploymentLocationCV$Data <- loadDeploymentLocation()
    df <- data.frame(DeploymentLocation = input$project_specific_admin_DeploymentLocation_AddNewDeploymentLocation, Description = input$project_specific_admin_DeploymentLocation_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblDeploymentLocation")
+   tb <- paste0(input$project_selected,"_tblDeploymentLocation")
    if((df$DeploymentLocation %in% dt$DeploymentLocation)==TRUE){
      shinyalert("Oops!", "DeploymentLocation Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "DeploymentLocation Added", type = "success")
    }
+   reset("project_specific_admin_DeploymentLocation_Form")
  })
  
  
@@ -434,7 +443,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  # reactive values
  
  loadFieldTrialIdentity <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblFieldTrialIdentity")
+   tb <- paste0(input$project_selected, "_tblFieldTrialIdentity")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -468,6 +477,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_FieldTrialIdentity_UpdateFieldTrialIdentity
    col="Description"
    value=input$project_specific_admin_FieldTrialIdentity_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblFieldTrialIdentity")
    
    sql <- paste("UPDATE ",tb," SET Description = ?value WHERE FieldTrialIdentity = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id2 = id, id1 = id)
@@ -487,13 +497,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_FieldTrialIdentity_AddNewFieldTrialIdentity)
    dt <- CV$Data <- loadFieldTrialIdentity()
    df <- data.frame(FieldTrialIdentity = input$project_specific_admin_FieldTrialIdentity_AddNewFieldTrialIdentity, Description = input$project_specific_admin_FieldTrialIdentity_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblFieldTrialIdentity")
+   tb <- paste0(input$project_selected,"_tblFieldTrialIdentity")
    if((df$FieldTrialIdentity %in% dt$FieldTrialIdentity)==TRUE){
      shinyalert("Oops!", "FieldTrialIdentity Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "FieldTrialIdentity Added", type = "success")
    }
+   reset("project_specific_admin_FieldTrialIdentity_Form")
  })
  
  
@@ -521,7 +532,6 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    updateTabsetPanel(session, "controlform_Tabs", selected = "controlform_dataform")
  })
  
-  # -------------------------------------------------------------------------------------------------------------------------------
   # --------------------------------------------Gene----------------------------------------------------
  
  observeEvent(input$project_specific_admin_Gene, {
@@ -538,7 +548,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
 #  reactive values
  
  loadGene <- reactive({
-   tb <- tb <- paste0(input$project_selection_selected, "_tblGene")
+   tb <- tb <- paste0(input$project_selected, "_tblGene")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -561,6 +571,12 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    r <- input$project_specific_admin_Gene_Table_select$select$r
    updateTextInput(session, "project_specific_admin_Gene_UpdateGene", label = "", value = df[r, 1])
    updateTextInput(session, "project_specific_admin_Gene_UpdateDescription", label = "", value = df[r, 2])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateGenBankAccessionNumber", "", value = df[r, 3])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateOrigin", "",value = df[r, 4])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateNBAPermitNumber", "", value = df[r, 5])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateOGTRPermitNumber", "", value = df[r, 6])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateMTANumber", "", value = df[r, 7])
+   updateTextInput(session, "project_specific_admin_Gene_UpdateNLRDNumber", "", value = df[r, 8])
  })
  
  
@@ -570,11 +586,15 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    df <- hot_to_r(temp)
    
    id=input$project_specific_admin_Gene_UpdateGene
-   col="Description"
-   value=input$project_specific_admin_Gene_UpdateDescription
+   val1=input$project_specific_admin_Gene_UpdateDescription; val2=input$project_specific_admin_Gene_UpdateGenBankAccessionNumber;
+   val3=input$project_specific_admin_Gene_UpdateOrigin; val4=input$project_specific_admin_Gene_UpdateNBAPermitNumber;
+   val5=input$project_specific_admin_Gene_UpdateOGTRPermitNumber; val6=input$project_specific_admin_Gene_UpdateMTANumber;
+   val7=input$project_specific_admin_Gene_UpdateNLRDNumber
+   tb <- paste0(input$project_selected, "_tblGene")
    
-   sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Gene = ?id1;")
-   query <- sqlInterpolate(pool, sql, value = value, id1 = id)
+   sql <- paste("UPDATE",tb,"SET Description = ?val1, GenBankAccessionNumber = ?val2, Origin = ?val3, NBAPermitNumber = ?val4, 
+                OGTRPermitNumber = ?val5, MTANumber = ?val6, NLRDNumber = ?val7  WHERE Gene = ?id1;")
+   query <- sqlInterpolate(pool, sql, val1 = val1, val2 = val2, val3 = val3, val4 = val4, val5 = val5, val6 = val6, val7 = val7, id1 = id)
    dbExecute(pool, query)
    
    GeneCV$Data <- loadGene()
@@ -590,14 +610,23 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  observeEvent(input$project_specific_admin_Gene_AddNew,{
    req(input$project_specific_admin_Gene_AddNewGene)
    dt <- GeneCV$Data <- loadGene()
-   df <- data.frame(Gene = input$project_specific_admin_Gene_AddNewGene, Description = input$project_specific_admin_Gene_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblGene")
+   df <- data.frame(Gene = input$project_specific_admin_Gene_AddNewGene, 
+                    Description = input$project_specific_admin_Gene_AddNewDescription,
+                    GenBankAccessionNumber = input$project_specific_admin_Gene_GenBankAccessionNumber,
+                    Origin = input$project_specific_admin_Gene_Origin,
+                    NBAPermitNumber = input$project_specific_admin_Gene_NBAPermitNumber,
+                    OGTRPermitNumber = input$project_specific_admin_Gene_OGTRPermitNumber,
+                    MTANumber = input$project_specific_admin_Gene_MTANumber,
+                    NLRDNumber = input$project_specific_admin_Gene_NLRDNumber)
+   
+   tb <- paste0(input$project_selected,"_tblGene")
    if((df$Gene %in% dt$Gene)==TRUE){
      shinyalert("Oops!", "Gene Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "Gene Added", type = "success")
    }
+   reset("project_specific_admin_Gene_Form")
  })
  
  
@@ -609,12 +638,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  
  
  observeEvent(input$project_specific_admin_Gene_Clear, {
-   reset(input$project_specific_admin_Gene_Form)
-   updateTextInput(session,  inputId = "project_specific_admin_Gene_AddNewGene", "Gene", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Gene_AddNewDescription", "Description", value = "")
-   
-   updateTextInput(session,  inputId = "project_specific_admin_Gene_UpdateGene", "", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Gene_UpdateDescription", "", value = "")
+   reset("project_specific_admin_Gene_Form")
  })
  
  observeEvent(input$project_specific_admin_Gene_ControlForm,{
@@ -643,7 +667,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  # reactive values
  
  loadGlassHouseTrialID <- reactive({
-   tb <- tb <- paste0(input$project_selection_selected, "_tblGlassHouseTrialID")
+   tb <- tb <- paste0(input$project_selected, "_tblGlassHouseTrialID")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -677,6 +701,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_GlassHouseTrialID_UpdateGlassHouseTrialID
    col="Description"
    value=input$project_specific_admin_GlassHouseTrialID_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblGlassHouseTrialID")
    
    sql <- paste("UPDATE",tb,"SET Description = ?value WHERE GlassHouseTrialID = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -696,13 +721,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_GlassHouseTrialID_AddNewGlassHouseTrialID)
    dt <- GlassHouseTrialIDCV$Data <- loadGlassHouseTrialID()
    df <- data.frame(GlassHouseTrialID = input$project_specific_admin_GlassHouseTrialID_AddNewGlassHouseTrialID, Description = input$project_specific_admin_GlassHouseTrialID_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblGlassHouseTrialID")
+   tb <- paste0(input$project_selected,"_tblGlassHouseTrialID")
    if((df$GlassHouseTrialID %in% dt$GlassHouseTrialID)==TRUE){
      shinyalert("Oops!", "GlassHouseTrialID Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "GlassHouseTrialID Added", type = "success")
    }
+   reset("project_specific_admin_GlassHouseTrialID_Form")
  })
  
  
@@ -731,30 +757,29 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  })
  
  
-  # -------------------------------------------------------------------------------------------------------------------------------
   # --------------------------------------------NewFeature----------------------------------------------------
  
  observeEvent(input$project_specific_admin_NewFeature, {
-   showModal(
-     modalDialog(size = "l",
+    showModal(
+       modalDialog(size = "l",
                    title = tags$h2(style="color:#800000;","New feature"),
                    useShinyalert(), 
                    shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
-     project_specific_admin_NewFeature_Modal
-   ))
+                   
+                   project_specific_admin_Newfeature_Modal
+       ))
  })
- 
  
  # reactive values
  
  loadNewFeature <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblNewFeature")
+   tb <- paste0(input$project_selected, "_tblNewFeature")
    pool %>% tbl(tb) %>% collect()
  })
  
  NewFeatureCV <- reactiveValues()
  
- output$project_specific_admin_NewFeature_Table <- renderRHandsontable({
+ output$project_specific_admin_Newfeature_Table <- renderRHandsontable({
    dt <- NewFeatureCV$Data <- loadNewFeature()
    rhandsontable(dt, selectCallback = TRUE, readOnly = FALSE, rowHeaders=F) %>%
      hot_table(stretchH = "all")
@@ -782,6 +807,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_NewFeature_UpdateNewFeature
    col="Description"
    value=input$project_specific_admin_NewFeature_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblNewFeature")
    
    sql <- paste("UPDATE",tb,"SET Description = ?value WHERE NewFeature = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -801,13 +827,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_NewFeature_AddNewNewFeature)
    dt <- NewFeatureCV$Data <- loadNewFeature()
    df <- data.frame(NewFeature = input$project_specific_admin_NewFeature_AddNewNewFeature, Description = input$project_specific_admin_NewFeature_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblNewFeature")
+   tb <- paste0(input$project_selected,"_tblNewFeature")
    if((df$NewFeature %in% dt$NewFeature)==TRUE){
      shinyalert("Oops!", "NewFeature Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "NewFeature Added", type = "success")
    }
+   reset("project_specific_admin_Newfeature_Form")
  })
  
  
@@ -852,7 +879,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
 #  reactive values
  
  loadPhenotype <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblPhenotype")
+   tb <- paste0(input$project_selected, "_tblPhenotype")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -886,6 +913,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_Phenotype_UpdatePhenotype
    col="Description"
    value=input$project_specific_admin_Phenotype_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblPhenotype")
    
    sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Phenotype = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -905,13 +933,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_Phenotype_AddNewPhenotype)
    dt <- PhenotypeCV$Data <- loadPhenotype()
    df <- data.frame(Phenotype = input$project_specific_admin_Phenotype_AddNewPhenotype, Description = input$project_specific_admin_Phenotype_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblPhenotype")
+   tb <- paste0(input$project_selected,"_tblPhenotype")
    if((df$Phenotype %in% dt$Phenotype)==TRUE){
      shinyalert("Oops!", "Phenotype Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "Phenotype Added", type = "success")
    }
+   reset("project_specific_admin_Phenotype_Form")
  })
  
  
@@ -956,7 +985,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  # reactive values
  
  loadPlantSelection <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblPlantSelection")
+   tb <- paste0(input$project_selected, "_tblPlantSelection")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -990,6 +1019,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    id=input$project_specific_admin_PlantSelection_UpdatePlantSelection
    col="Description"
    value=input$project_specific_admin_PlantSelection_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblPlantSelection")
    
    sql <- paste("UPDATE ",tb," SET Description = ?value WHERE PlantSelection = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
@@ -1009,13 +1039,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    req(input$project_specific_admin_PlantSelection_AddNewPlantSelection)
    dt <- PlantSelectionCV$Data <- loadPlantSelection()
    df <- data.frame(PlantSelection = input$project_specific_admin_PlantSelection_AddNewPlantSelection, Description = input$project_specific_admin_PlantSelection_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblPlantSelection")
+   tb <- paste0(input$project_selected,"_tblPlantSelection")
    if((df$PlantSelection %in% dt$PlantSelection)==TRUE){
      shinyalert("Oops!", "PlantSelection Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "PlantSelection Added", type = "success")
    }
+   reset("project_specific_admin_PlantSelection_Form")
  })
  
  
@@ -1043,16 +1074,15 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    updateTabsetPanel(session, "controlform_Tabs", selected = "controlform_dataform")
  })
  
-  # -------------------------------------------------------------------------------------------------------------------------------
   # --------------------------------------------Promoter----------------------------------------------------
  
  observeEvent(input$project_specific_admin_Promoter, {
    showModal(
      modalDialog(size = "l",
-                   title = tags$h2(style="color:#800000;","Promoter"),
-                   useShinyalert(), 
-                   shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
-     project_specific_admin_Promoter_Modal
+       title = tags$h2(style="color:#800000;","Promoter"),
+       useShinyalert(), 
+       shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
+       project_specific_admin_Promoter_Modal
    ))
  })
  
@@ -1060,7 +1090,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  # reactive values
  
  loadPromoter <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblPromoter")
+   tb <- paste0(input$project_selected, "_tblPromoter")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -1083,20 +1113,32 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    r <- input$project_specific_admin_Promoter_Table_select$select$r
    updateTextInput(session, "project_specific_admin_Promoter_UpdatePromoter", label = "", value = df[r, 1])
    updateTextInput(session, "project_specific_admin_Promoter_UpdateDescription", label = "", value = df[r, 2])
+   updateTextInput(session, "project_specific_admin_Promoter_UpdateGenBankAccessionNumber", "", value = df[r, 3])
+   updateTextInput(session, "project_specific_admin_Promoter_UpdateOrigin", "",value = df[r, 4])
+   updateTextInput(session, "project_specific_admin_Promoter_UpdateNBAPermitNumber", "", value = df[r, 5])
+   updateTextInput(session, "project_specific_admin_Promoter_UpdateOGTRPermitNumber", "", value = df[r, 6])
+   updateTextInput(session, "project_specific_admin_Promoter_UpdateMTANumber", "", value = df[r, 7])
+   
  })
  
  
-  
  observeEvent(input$project_specific_admin_Promoter_Update,{
    temp <- isolate(input$project_specific_admin_Promoter_Table)
    df <- hot_to_r(temp)
    
    id=input$project_specific_admin_Promoter_UpdatePromoter
-   col="Description"
-   value=input$project_specific_admin_Promoter_UpdateDescription
+   col1="Description"; col2="GenBankAccessionNumber"; col3="Origin"; col4="NBAPermitNumber"; col5="OGTRPermitNumber"; col6="MTANumber";
+   val1=input$project_specific_admin_Promoter_UpdateDescription
+   val2=input$project_specific_admin_Promoter_UpdateGenBankAccessionNumber
+   val3=input$project_specific_admin_Promoter_UpdateOrigin
+   val4=input$project_specific_admin_Promoter_UpdateNBAPermitNumber
+   val5=input$project_specific_admin_Promoter_UpdateOGTRPermitNumber
+   val6=input$project_specific_admin_Promoter_UpdateMTANumber
    
-   sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Promoter = ?id1;")
-   query <- sqlInterpolate(pool, sql, value = value, id1 = id)
+   tb <- paste0(input$project_selected, "_tblPromoter")
+   
+   sql <- paste("UPDATE",tb,"SET Description = ?val1, GenBankAccessionNumber = ?val2, Origin = ?val3, NBAPermitNumber = ?val4, OGTRPermitNumber = ?val5, MTANumber = ?val6 WHERE Promoter = ?id1;")
+   query <- sqlInterpolate(pool, sql, val1 = val1, val2 = val2, val3 = val3, val4 = val4, val5 = val5, val6 = val6, id1 = id)
    dbExecute(pool, query)
    
    PromoterCV$Data <- loadPromoter()
@@ -1112,14 +1154,22 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  observeEvent(input$project_specific_admin_Promoter_AddNew,{
    req(input$project_specific_admin_Promoter_AddNewPromoter)
    dt <- PromoterCV$Data <- loadPromoter()
-   df <- data.frame(Promoter = input$project_specific_admin_Promoter_AddNewPromoter, Description = input$project_specific_admin_Promoter_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblPromoter")
+   df <- data.frame(Promoter = input$project_specific_admin_Promoter_AddNewPromoter, 
+                    Description = input$project_specific_admin_Promoter_AddNewDescription,
+                    GenBankAccessionNumber = input$project_specific_admin_Promoter_GenBankAccessionNumber,
+                    Origin = input$project_specific_admin_Promoter_Origin,
+                    NBAPermitNumber = input$project_specific_admin_Promoter_NBAPermitNumber,
+                    OGTRPermitNumber = input$project_specific_admin_Promoter_OGTRPermitNumber,
+                    MTANumber = input$project_specific_admin_Promoter_MTANumber
+                  )
+   tb <- paste0(input$project_selected,"_tblPromoter")
    if((df$Promoter %in% dt$Promoter)==TRUE){
      shinyalert("Oops!", "Promoter Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "Promoter Added", type = "success")
    }
+   reset("project_specific_admin_Promoter_Form")
  })
  
  
@@ -1147,31 +1197,31 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    updateTabsetPanel(session, "controlform_Tabs", selected = "controlform_dataform")
  })
  
-  # -------------------------------------------------------------------------------------------------------------------------------
-  # --------------------------------------------Strains----------------------------------------------------
+  # --------------------------------------------Strain----------------------------------------------------
  
- observeEvent(input$project_specific_admin_Strains, {
+ observeEvent(input$project_specific_admin_Strain, {
    showModal(
      modalDialog(size = "l",
-                   title = tags$h2(style="color:#800000;","Strain"),
-                   useShinyalert(), 
-                   shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
-     project_specific_admin_Strains_Modal
+       title = tags$h2(style="color:#800000;","Strain"),
+       useShinyalert(), 
+       shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
+     
+       project_specific_admin_Strain_Modal
    ))
  })
  
  
 #  reactive values
  
- loadStrains <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblStrains")
+ loadStrain <- reactive({
+   tb <- paste0(input$project_selected, "_tblStrain")
    pool %>% tbl(tb) %>% collect()
  })
  
- StrainsCV <- reactiveValues()
+ StrainCV <- reactiveValues()
  
- output$project_specific_admin_Strains_Table <- renderRHandsontable({
-   dt <- StrainsCV$Data <- loadStrains()
+ output$project_specific_admin_Strain_Table <- renderRHandsontable({
+   dt <- StrainCV$Data <- loadStrain()
    rhandsontable(dt, selectCallback = TRUE, readOnly = FALSE, rowHeaders=F) %>%
      hot_table(stretchH = "all")
  })
@@ -1179,75 +1229,77 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  
 #  update
  
- observeEvent(input$project_specific_admin_Strains_Table_select$select$r,{
+ observeEvent(input$project_specific_admin_Strain_Table_select$select$r,{
    
-   temp <- isolate(input$project_specific_admin_Strains_Table)
+   temp <- isolate(input$project_specific_admin_Strain_Table)
    df <- hot_to_r(temp)
    
-   r <- input$project_specific_admin_Strains_Table_select$select$r
-   updateTextInput(session, "project_specific_admin_Strains_UpdateStrains", label = "", value = df[r, 1])
-   updateTextInput(session, "project_specific_admin_Strains_UpdateDescription", label = "", value = df[r, 2])
+   r <- input$project_specific_admin_Strain_Table_select$select$r
+   updateTextInput(session, "project_specific_admin_Strain_UpdateStrain", label = "", value = df[r, 1])
+   updateTextInput(session, "project_specific_admin_Strain_UpdateDescription", label = "", value = df[r, 2])
  })
  
  
   
- observeEvent(input$project_specific_admin_Strains_Update,{
-   temp <- isolate(input$project_specific_admin_Strains_Table)
+ observeEvent(input$project_specific_admin_Strain_Update,{
+   temp <- isolate(input$project_specific_admin_Strain_Table)
    df <- hot_to_r(temp)
    
-   id=input$project_specific_admin_Strains_UpdateStrains
+   id=input$project_specific_admin_Strain_UpdateStrain
    col="Description"
-   value=input$project_specific_admin_Strains_UpdateDescription
+   value=input$project_specific_admin_Strain_UpdateDescription
+   tb <- paste0(input$project_selected, "_tblStrain")
    
-   sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Strains = ?id1;")
+   sql <- paste("UPDATE",tb,"SET Description = ?value WHERE Strain = ?id1;")
    query <- sqlInterpolate(pool, sql, value = value, id1 = id)
    dbExecute(pool, query)
    
-   StrainsCV$Data <- loadStrains()
-   StrainsCV$Data
+   StrainCV$Data <- loadStrain()
+   StrainCV$Data
    shinyjs::js$refresh()
  })
  
  
-  # add new Strains
+  # add new Strain
   # 
   # define fields to add
  
- observeEvent(input$project_specific_admin_Strains_AddNew,{
-   req(input$project_specific_admin_Strains_AddNewStrains)
-   dt <- StrainsCV$Data <- loadStrains()
-   df <- data.frame(Strains = input$project_specific_admin_Strains_AddNewStrains, Description = input$project_specific_admin_Strains_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblStrains")
-   if((df$Strains %in% dt$Strains)==TRUE){
-     shinyalert("Oops!", "Strains Exists", type = "error")
+ observeEvent(input$project_specific_admin_Strain_AddNew,{
+   req(input$project_specific_admin_Strain_AddNewStrain)
+   dt <- StrainCV$Data <- loadStrain()
+   df <- data.frame(Strain = input$project_specific_admin_Strain_AddNewStrain, Description = input$project_specific_admin_Strain_AddNewDescription)
+   tb <- paste0(input$project_selected,"_tblStrain")
+   if((df$Strain %in% dt$Strain)==TRUE){
+     shinyalert("Oops!", "Strain Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
-     shinyalert("Success!", "Strains Added", type = "success")
+     shinyalert("Success!", "Strain Added", type = "success")
    }
+   reset("project_specific_admin_Strain_Form")
  })
  
  
- observeEvent(input$project_specific_admin_Strains_Refresh,{
-   StrainsCV$Data <- loadStrains()
-   StrainsCV$Data
+ observeEvent(input$project_specific_admin_Strain_Refresh,{
+   StrainCV$Data <- loadStrain()
+   StrainCV$Data
    shinyjs::js$refresh()
  })
  
  
- observeEvent(input$project_specific_admin_Strains_Clear, {
-   reset(input$project_specific_admin_Strains_Form)
-   updateTextInput(session,  inputId = "project_specific_admin_Strains_AddNewStrains", "Strains", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Strains_AddNewDescription", "Description", value = "")
+ observeEvent(input$project_specific_admin_Strain_Clear, {
+   reset(input$project_specific_admin_Strain_Form)
+   updateTextInput(session,  inputId = "project_specific_admin_Strain_AddNewStrain", "Strain", value = "")
+   updateTextInput(session,  inputId = "project_specific_admin_Strain_AddNewDescription", "Description", value = "")
    
-   updateTextInput(session,  inputId = "project_specific_admin_Strains_UpdateStrains", "", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Strains_UpdateDescription", "", value = "")
+   updateTextInput(session,  inputId = "project_specific_admin_Strain_UpdateStrain", "", value = "")
+   updateTextInput(session,  inputId = "project_specific_admin_Strain_UpdateDescription", "", value = "")
  })
  
- observeEvent(input$project_specific_admin_Strains_ControlForm,{
+ observeEvent(input$project_specific_admin_Strain_ControlForm,{
    removeModal()
  })
  
- observeEvent(input$project_specific_admin_Strains_ControlForm,{
+ observeEvent(input$project_specific_admin_Strain_ControlForm,{
    updateTabsetPanel(session, "controlform_Tabs", selected = "controlform_dataform")
  })
  
@@ -1257,10 +1309,10 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  observeEvent(input$project_specific_admin_Terminator, {
    showModal(
      modalDialog(size = "l",
-                   title = tags$h2(style="color:#800000;","Terminator"),
-                   useShinyalert(), 
-                   shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
-     project_specific_admin_Terminator_Modal
+       title = tags$h2(style="color:#800000;","Terminator"),
+       useShinyalert(), 
+       shinyjs::extendShinyjs(text = "shinyjs.refresh = function() { location.reload(); }"),
+       project_specific_admin_Terminator_Modal
    ))
  })
  
@@ -1268,7 +1320,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
 #  reactive values
  
  loadTerminator <- reactive({
-   tb <- paste0(input$project_selection_selected, "_tblTerminator")
+   tb <- paste0(input$project_selected, "_tblTerminator")
    pool %>% tbl(tb) %>% collect()
  })
  
@@ -1291,6 +1343,11 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    r <- input$project_specific_admin_Terminator_Table_select$select$r
    updateTextInput(session, "project_specific_admin_Terminator_UpdateTerminator", label = "", value = df[r, 1])
    updateTextInput(session, "project_specific_admin_Terminator_UpdateDescription", label = "", value = df[r, 2])
+   updateTextInput(session, "project_specific_admin_Terminator_UpdateGenBankAccessionNumber", "", value = df[r, 3])
+   updateTextInput(session, "project_specific_admin_Terminator_UpdateOrigin", "",value = df[r, 4])
+   updateTextInput(session, "project_specific_admin_Terminator_UpdateNBAPermitNumber", "", value = df[r, 5])
+   updateTextInput(session, "project_specific_admin_Terminator_UpdateOGTRPermitNumber", "",value = df[r, 6])
+   updateTextInput(session, "project_specific_admin_Terminator_UpdateMTANumber", "", value = df[r, 7])
  })
  
  
@@ -1300,11 +1357,15 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
    df <- hot_to_r(temp)
    
    id=input$project_specific_admin_Terminator_UpdateTerminator
-   col="Description"
-   value=input$project_specific_admin_Terminator_UpdateDescription
+   val1=input$project_specific_admin_Terminator_UpdateDescription; val2=input$project_specific_admin_Terminator_UpdateGenBankAccessionNumber;
+   val3=input$project_specific_admin_Terminator_UpdateOrigin; val4=input$project_specific_admin_Terminator_UpdateNBAPermitNumber;
+   val5=input$project_specific_admin_Terminator_UpdateOGTRPermitNumber; val6=input$project_specific_admin_Terminator_UpdateMTANumber;
    
-   sql <- paste("UPDATE",tb,"SET Description = ?value, Terminator = ?id2 WHERE Terminator = ?id1;")
-   query <- sqlInterpolate(pool, sql, value = value, id2 = id, id1 = id)
+   tb <- paste0(input$project_selected, "_tblTerminator")
+   
+   sql <- paste("UPDATE",tb,"SET Description = ?val1, GenBankAccessionNumber = ?val2, Origin = ?val3,
+                NBAPermitNumber = ?val4, OGTRPermitNumber = ?val5, MTANumber = ?val6 WHERE Terminator = ?id1;")
+   query <- sqlInterpolate(pool, sql, val1 = val1, val2 = val2, val3 = val3, val4 = val4, val5 = val5, val6 = val6, id1 = id)
    dbExecute(pool, query)
    
    TerminatorCV$Data <- loadTerminator()
@@ -1320,14 +1381,22 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  observeEvent(input$project_specific_admin_Terminator_AddNew,{
    req(input$project_specific_admin_Terminator_AddNewTerminator)
    dt <- TerminatorCV$Data <- loadTerminator()
-   df <- data.frame(Terminator = input$project_specific_admin_Terminator_AddNewTerminator, Description = input$project_specific_admin_Terminator_AddNewDescription)
-   tb <- paste0(input$project_selection_selected,"_tblTerminator")
+   df <- data.frame(Terminator = input$project_specific_admin_Terminator_AddNewTerminator, 
+                    Description = input$project_specific_admin_Terminator_AddNewDescription,
+                    GenBankAccessionNumber = input$project_specific_admin_Terminator_GenBankAccessionNumber,
+                    Origin = input$project_specific_admin_Terminator_Origin,
+                    NBAPermitNumber = input$project_specific_admin_Terminator_NBAPermitNumber,
+                    OGTRPermitNumber = input$project_specific_admin_Terminator_OGTRPermitNumber,
+                    MTANumber = input$project_specific_admin_Terminator_MTANumber
+                    )
+   tb <- paste0(input$project_selected,"_tblTerminator")
    if((df$Terminator %in% dt$Terminator)==TRUE){
      shinyalert("Oops!", "Terminator Exists", type = "error")
    }else {
      dbWriteTable(pool, tb, df, append = T)
      shinyalert("Success!", "Terminator Added", type = "success")
    }
+   reset("project_specific_admin_Terminator_Form")
  })
  
  
@@ -1339,12 +1408,7 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains_ControlForm,{
  
  
  observeEvent(input$project_specific_admin_Terminator_Clear, {
-   reset(input$project_specific_admin_Terminator_Form)
-   updateTextInput(session,  inputId = "project_specific_admin_Terminator_AddNewTerminator", "Terminator", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Terminator_AddNewDescription", "Description", value = "")
-   
-   updateTextInput(session,  inputId = "project_specific_admin_Terminator_UpdateTerminator", "", value = "")
-   updateTextInput(session,  inputId = "project_specific_admin_Terminator_UpdateDescription", "", value = "")
+   reset("project_specific_admin_Terminator_Form")
  })
  
  observeEvent(input$project_specific_admin_Terminator_ControlForm,{

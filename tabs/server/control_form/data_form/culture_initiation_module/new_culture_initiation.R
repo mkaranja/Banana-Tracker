@@ -16,16 +16,16 @@ new_culture_initiation <- tabPanel("New Culture Intiation", value = "new_culture
                                             disabled(textInput("new_culture_initiation_ExplantIdentityType", labelMandatory("Explant Identity Type")))
                                      ),
                                      column(2, br(),br(),
-                                            actionBttn("new_culture_initiation_GenerateIdentity", "Generate Identity", size= "sm", style = "fill", color = "primary"),
+                                            actionBttn("new_culture_initiation_GenerateIdentity", "Generate Identity", size= "xs", style = "fill", color = "primary"),
                                             shinyBS::bsTooltip("new_culture_initiation_GenerateIdentity", "Please select the correct year first",
                                                                "right", options = list(container = "body"))),
                                      column(2, selectInput("new_culture_initiation_Year", "Year", choices = c(seq(2000,lubridate::year(Sys.Date()),1)),selected = lubridate::year(Sys.Date()))),
                                      column(1),
                                      column(4,
                                             conditionalPanel(condition = "input.new_culture_initiation_ReadyToCulture=='Yes'",
-                                                             numericInput("new_culture_initiation_NumberOfCultures", labelMandatory("Number of Cultures"), value = NULL),
+                                                             numericInput("new_culture_initiation_NumberOfCultures", labelMandatory("Number of Cultures"), value = 0),
                                                              dateInput("new_culture_initiation_DateOfCultures", labelMandatory("Date of Culture"), value = NULL),
-                                                             selectInput("new_culture_initiation_CulturedBy", labelMandatory("Cultured By"), choices = c("",cultured_by$CulturedBy)),
+                                                             selectInput("new_culture_initiation_CulturedBy", labelMandatory("Cultured By"), choices = c("", cultured_by$CulturedBy)),
                                                              textAreaInput("new_culture_initiation_Comments1",  "Comments")
                                             ))
                                      )
@@ -47,15 +47,15 @@ new_culture_initiation <- tabPanel("New Culture Intiation", value = "new_culture
                                             column(3, selectizeInput("new_culture_initiation_VirusIndexed", labelMandatory("Virus Indexed"), choices = c("","Yes", "No"), multiple = F)),
                                             column(1, conditionalPanel(condition = "input.new_culture_initiation_VirusIndexed=='Yes'", br(), br(), p("IF 'Yes'"))),
                                             column(2, conditionalPanel(condition = "input.new_culture_initiation_VirusIndexed=='Yes'", dateInput("new_culture_initiation_VirusIndexedDate", "Virus Indexed Date", value = "1980-01-01"))),
-                                            column(2, conditionalPanel(condition = "input.new_culture_initiation_VirusIndexed=='Yes'", textInput("new_culture_initiation_VirusIndexedBy", "Virus Indexed By"))),
+                                            column(2, conditionalPanel(condition = "input.new_culture_initiation_VirusIndexed=='Yes'", selectInput("new_culture_initiation_VirusIndexedBy", "Virus Indexed By", choices = cultured_by$CulturedBy))),
                                             column(2, br(), br(), 
                                                    conditionalPanel(
                                                      condition = "input.new_culture_initiation_ReadyToCulture=='No'",
-                                                     actionBttn("new_culture_initiation_SaveStarterCulture", "Save Starter Culture", style = "fill", size = "sm", color = "primary")
+                                                     actionBttn("new_culture_initiation_SaveStarterCulture", "Save Starter Culture", style = "fill", size = "xs", color = "primary")
                                                    ),
                                                    conditionalPanel(
                                                      condition = "input.new_culture_initiation_ReadyToCulture=='Yes'",
-                                                     actionBttn("new_culture_initiation_SaveStarterCultureAndSubCulture", "Save Starter Culture and Sub Culture", style = "fill", size = "sm", color = "primary")
+                                                     actionBttn("new_culture_initiation_SaveStarterCultureAndSubCulture", "Save Starter Culture and Sub Culture", style = "fill", size = "xs", color = "primary")
                                                    ),
                                                   )
                                      )
@@ -86,10 +86,10 @@ new_culture_initiation <- tabPanel("New Culture Intiation", value = "new_culture
                                                 dateInput("new_culture_initiation_DateOfStarterCulture", labelMandatory("Date of Initial Culture"), value=NULL),
                                                 selectizeInput("new_culture_initiation_Media", labelMandatory("Media"), choices = c("",media$Media), multiple = F),
                                                 selectizeInput("new_culture_initiation_Additives", "Additives", choices = c("", additives$Additives), multiple = T),
-                                                numericInput("new_culture_initiation_LabBookNumber", labelMandatory("Lab Book Number"), value = NULL),
-                                                numericInput("new_culture_initiation_PageNumber", labelMandatory("Page Number"), value = NULL),
+                                                numericInput("new_culture_initiation_LabBookNumber", labelMandatory("Lab Book Number"), value = 0),
+                                                numericInput("new_culture_initiation_PageNumber", labelMandatory("Page Number"), value = 0),
                                                 radioGroupButtons(inputId = "new_culture_initiation_ReadyToCulture",label = "Ready to Culture?",
-                                                                            choices = c("Yes", "No"), selected = "No", individual = TRUE, size ="sm",status = "info",
+                                                                            choices = c("Yes", "No"), selected = "No", individual = TRUE, size ="xs",status = "info",
                                                                             checkIcon = list(yes = icon("ok", lib = "glyphicon")))
                                           ),
                                          column(5, br(),br(),
@@ -105,10 +105,10 @@ new_culture_initiation <- tabPanel("New Culture Intiation", value = "new_culture
                                          column(4, align="center", br(),br(),br(),
                                                 panel_div(class_type = "default",
                                                           content = tags$div(
-                                                            actionBttn("new_culture_initiation_Refresh", "Refresh", style = "fill", size = "sm", color = "primary"), br(), br(),
+                                                            actionBttn("new_culture_initiation_Refresh", "Refresh", style = "fill", size = "xs", color = "primary"), br(), br(),
                                                             selectInput("new_culture_initiation_ExplantIdentiy", "Explant Identity", choices = NULL, multiple = F), br(),
-                                                            actionBttn("new_culture_initiation_LoadData", "Load Data", style = "fill", size = "sm", color = "primary"), br(), br(),
-                                                            actionBttn("new_culture_initiation_Update", "Update", style = "fill", size = "sm", color = "primary")
+                                                            actionBttn("new_culture_initiation_LoadData", "Load Data", style = "fill", size = "xs", color = "primary"), br(), br(),
+                                                            actionBttn("new_culture_initiation_Update", "Update", style = "fill", size = "xs", color = "primary")
                                                           ))
                                          )
                                         )
@@ -116,16 +116,21 @@ new_culture_initiation <- tabPanel("New Culture Intiation", value = "new_culture
                                    fluidRow(
                                      verbatimTextOutput("tbl"),
                                      column(2, offset = 5,
-                                            actionBttn("new_culture_initiation_ClearForm", "Clear Form", style = "jelly", size = "sm", color = "primary")
+                                            actionBttn("new_culture_initiation_ClearForm", "Clear Form", style = "jelly", size = "xs", color = "primary")
                                      )
                                      
                                    ), 
                                   fluidRow(br(),hr(),
-                                           column(8, offset = 2,
-                                                  column(2, actionBttn("new_culture_initiation_FormToPicture", "Form to Picture", style = "jelly", size = "sm", color = "primary", block=T)),
-                                                  column(4, actionBttn("new_culture_initiation_MFC_SCP_CSC_ControlForm", "MFC, SCP and CSC Control Form", style = "jelly", size = "sm", color = "primary", block=T)),
-                                                  column(2, actionBttn("new_culture_initiation_Exit", "Exit", style = "jelly", size = "sm", color = "primary", block=T))
-                                           ),verbatimTextOutput("txt4")
+                                           column(6),
+                                           column(6,
+                                                  column(3, actionBttn("new_culture_initiation_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "success", block=T)),
+                                                  column(6, actionBttn("new_culture_initiation_MFC_SCP_CSC_ControlForm", "MFC, SCP and CSC Control Form", style = "jelly", size = "xs", color = "warning", block=T)),
+                                                  column(2, 
+                                                         tags$button(id = 'new_culture_initiation_Exit', type = "button", class = "btn action-button",
+                                                                     onclick = "setTimeout(function(){window.close();},500);",  # close browser
+                                                                     "Exit", style="color: #fff; background-color: #ff0011; border-color: #ff0011; padding:4px; font-size:80%;")
+                                                         )
+                                          )
                                   )
                               )
                                    
