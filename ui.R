@@ -17,20 +17,21 @@ function(request) {
                # tags$style(HTML(".form-group {margin-bottom: 0 !important;}"))
             ),
             useShinyjs(), # Include shinyjs in the UI
-            extendShinyjs(text = jsrefresh, functions = c("refresh")),
-            shinyjs::extendShinyjs(text = jsResetCode),                      # Add the js code to the page
-            extendShinyjs(text = jsprint, functions = c("winprint")),
-            extendShinyjs(text = jsclose, functions = c("closeWindow")),
+            
             
             header = tagList(
-                extendShinyjs("www/app-shinyjs.js", functions = c("updateHistory"))
+                extendShinyjs("www/app-shinyjs.js", functions = c("updateHistory")),
+                extendShinyjs(text = jsrefresh, functions = c("refresh")),
+                shinyjs::extendShinyjs(text = jsResetCode),                      # Add the js code to the page
+                extendShinyjs(text = jsprint, functions = c("winprint")),
+                extendShinyjs(text = jsclose, functions = c("closeWindow"))
             ),
             tags$style(type = "text/css", ".datepicker{z-index: 1100 !important;}"),
             shinyjs::inlineCSS(appCSS),
             
-            #setBackgroundImage(
-            #     src = "img/banana.jpeg" #src = "https://api.time.com/wp-content/uploads/2019/11/gettyimages-459761948.jpg?w=800&quality=85"
-            # ),
+            # setBackgroundImage(
+            #      src = "https://api.time.com/wp-content/uploads/2019/11/gettyimages-459761948.jpg?w=800&quality=85"
+            #  ),
             
             ## Display login details 
            

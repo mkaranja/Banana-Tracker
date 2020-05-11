@@ -1,14 +1,14 @@
-ipak <- function(pkg){
-new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-if (length(new.pkg)) 
-  install.packages(new.pkg, dependencies = TRUE)
-sapply(pkg, require, character.only = TRUE)
-}
-
-# usage
-packages <- c("devtools","shiny", "shinyBS", "shinyWidgets", "shinyjs", "shinyalert", "shinydashboard","shinycssloaders", 
-            "rhandsontable", "dplyr", "dbplyr", "magrittr", "odbc", "RODBC", "pool", "bcrypt", "lubridate","sodium")
-ipak(packages)
+ # ipak <- function(pkg){
+ # new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+ # if (length(new.pkg)) 
+ #   install.packages(new.pkg, dependencies = TRUE)
+ # sapply(pkg, require, character.only = TRUE)
+ # }
+ # 
+ # # usage
+ # packages <- c("devtools","shiny", "shinyBS", "shinyWidgets", "shinyjs", "shinyalert", "shinydashboard","shinycssloaders", 
+ #             "rhandsontable", "dplyr", "dbplyr", "magrittr", "odbc", "RODBC", "pool", "bcrypt", "lubridate","sodium")
+ # ipak(packages)
 
 library(shiny)
 library(shinyBS)
@@ -26,13 +26,14 @@ library(magrittr)
 library(odbc)
 library(RODBC)
 library(pool)
-
+library(V8)
 # library(webshot)
 library(bcrypt) # passwords
 # library(keyring)
 # library(digest)
 library(sodium)
 library(waiter) # notifications
+library(lubridate)
 source("functions.R")
 
  pool <- dbConnect(odbc::odbc(), 
@@ -58,6 +59,7 @@ source("R/main_app.R", local = TRUE) # Main App
 jsrefresh <- "shinyjs.refresh = function() { history.go(0); }" # refresh app
 jsprint <- 'shinyjs.winprint = function() { window.capture(); }' # print page
 jsclose <- "shinyjs.closeWindow = function() { window.close(); }" # close app
+# jscode <- "shinyjs.closeWindow = function() { window.close(); }"
 jsResetCode <- "shinyjs.reset2 = function() {history.go(0)}" # Define the js method that resets the page
 
 enableBookmarking(store = "url")

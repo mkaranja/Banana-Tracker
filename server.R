@@ -59,7 +59,6 @@ shinyServer(function(input, output, session) {
     # Reports
     
     source("tabs/server/control_form/reports.R", local = TRUE)
-    #source("tabs/server/control_form/reports/cell_suspension_culture_reports.R", local = TRUE)
     
     # User Details
     
@@ -68,9 +67,8 @@ shinyServer(function(input, output, session) {
     ## 3 . PROJECT SELECTION TAB---------------------------------------------------------------------------------------
     
     source("tabs/server/project_specific.R", local = TRUE)
-    # source("tabs/server/project_specific.R", local = TRUE)
     
-    ##-4. - ADMINISTRATION TAB ----------------------------------------------------------------------------------------
+    ## 4. - ADMINISTRATION TAB ----------------------------------------------------------------------------------------
     
     source("tabs/server/administration.R", local = TRUE)
     
