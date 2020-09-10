@@ -959,51 +959,52 @@ observeEvent(input$vector_inventory_search_LoadDataToUpdate,{
   vector_inventory <- vector_inventory()
 
   dt <- vector_inventory() %>%
-    dplyr::filter(trimws(VectorID) == trimws(input$vector_inventory_search_SelectedVectorID))[1,]
-
+    dplyr::filter(trimws(VectorID) == trimws(input$vector_inventory_search_SelectedVectorID)) %>%
+    #dplyr::arrange(desc(lubridate::ydm(DateOfCulture))) %>%
+    .[1,] # sort in descending order and select the most recent
   # inventory 1
   updateTextInput(session, "vector_inventory_1_VectorID", "Vector ID", value = vector_inventory$VectorID)
   updateTextInput(session, "vector_inventory_1_VectorPrefix", "Vector Prefix", value = vector_inventory$VectorPrefix)
   updateTextInput(session, "vector_inventory_1_VectorCode", "Vector Code", value = vector_inventory$VectorCode)
   updateTextInput(session, "vector_inventory_1_VectorSuffix", "Vector Suffix", value = vector_inventory$VectorSuffix)
-  updateSelectInput(session, "vector_inventory_1_BacterialSelection","Bacterial Selection", choices = c(vector_inventory$BacterialSelection), selected = dt$BacterialSelection)
-  updateSelectInput(session, "vector_inventory_1_PlantSelection","Plant Selection", choices = c(vector_inventory$PlantSelection), selected = dt$PlantSelection)
+  updateSelectInput(session, "vector_inventory_1_BacterialSelection","Bacterial Selection", choices = c('',vector_inventory$BacterialSelection), selected = dt$BacterialSelection)
+  updateSelectInput(session, "vector_inventory_1_PlantSelection","Plant Selection", choices = c('',vector_inventory$PlantSelection), selected = dt$PlantSelection)
   updateTextInput(session, "vector_inventory_1_Synonyms1", "Synonyms 1", value = vector_inventory$Synonym1)
   updateTextInput(session, "vector_inventory_1_Synonyms2", "Synonyms 2", value = vector_inventory$Synonym2)
   updateTextInput(session, "vector_inventory_1_Synonyms3", "Synonyms 3", value = vector_inventory$Synonym3)
   updateTextInput(session, "vector_inventory_1_Synonyms4", "Synonyms 4", value = vector_inventory$Synonym4)
   updateTextInput(session, "vector_inventory_1_Synonyms5", "Synonyms 5", value = vector_inventory$Synonym5)
-  updateSelectInput(session, "vector_inventory_1_Backbone","", choices = c(vector_inventory$Backbone), selected = dt$Backbone)
-  updateSelectInput(session, "vector_inventory_1_ClonedBy","", choices = c(vector_inventory$ClonedBy), selected = dt$ClonedBy)
+  updateSelectInput(session, "vector_inventory_1_Backbone","", choices = c('',vector_inventory$Backbone), selected = dt$Backbone)
+  updateSelectInput(session, "vector_inventory_1_ClonedBy","", choices = c('',vector_inventory$ClonedBy), selected = dt$ClonedBy)
   updateDateInput(session, "vector_inventory_1_DateOfCloning","", value = vector_inventory$ClonedDate)
   updateNumericInput(session, "vector_inventory_1_LabBookNumber", "", value = vector_inventory$LabBookNumber)
   updateNumericInput(session, "vector_inventory_1_PageNumber", "", value = vector_inventory$PageNumber)
 
   # inventory 2
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Promoter","", choices = c(vector_inventory$Cassette1Promoter), selected = dt$Cassette1Promoter)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Promoter","", choices = c(vector_inventory$Cassette2Promoter), selected = dt$Cassette2Promoter)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Promoter","", choices = c(vector_inventory$Cassette3Promoter), selected = dt$Cassette3Promoter)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Promoter","", choices = c(vector_inventory$Cassette4Promoter), selected = dt$Cassette4Promoter)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Promoter","", choices = c(vector_inventory$Cassette5Promoter), selected = dt$Cassette5Promoter)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Promoter","", choices = c('',vector_inventory$Cassette1Promoter), selected = dt$Cassette1Promoter)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Promoter","", choices = c('',vector_inventory$Cassette2Promoter), selected = dt$Cassette2Promoter)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Promoter","", choices = c('',vector_inventory$Cassette3Promoter), selected = dt$Cassette3Promoter)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Promoter","", choices = c('',vector_inventory$Cassette4Promoter), selected = dt$Cassette4Promoter)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Promoter","", choices = c('',vector_inventory$Cassette5Promoter), selected = dt$Cassette5Promoter)
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Gene","", choices =  c(vector_inventory$Cassette1Gene), selected = dt$Cassette1Gene)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Gene","", choices =  c(vector_inventory$Cassette2Gene), selected = dt$Cassette2Gene)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Gene","", choices =  c(vector_inventory$Cassette3Gene), selected = dt$Cassette3Gene)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Gene","", choices =  c(vector_inventory$Cassette4Gene), selected = dt$Cassette4Gene)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Gene","", choices =  c(vector_inventory$Cassette5Gene), selected = dt$Cassette5Gene)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Gene","", choices =  c('',vector_inventory$Cassette1Gene), selected = dt$Cassette1Gene)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Gene","", choices =  c('',vector_inventory$Cassette2Gene), selected = dt$Cassette2Gene)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Gene","", choices =  c('',vector_inventory$Cassette3Gene), selected = dt$Cassette3Gene)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Gene","", choices =  c('',vector_inventory$Cassette4Gene), selected = dt$Cassette4Gene)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Gene","", choices =  c('',vector_inventory$Cassette5Gene), selected = dt$Cassette5Gene)
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Terminator","", choices = c(vector_inventory$Cassette1Terminator), selected = dt$Cassette1Terminator)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Terminator","", choices = c(vector_inventory$Cassette2Terminator), selected = dt$Cassette2Terminator)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Terminator","", choices = c(vector_inventory$Cassette3Terminator), selected = dt$Cassette3Terminator)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Terminator","", choices = c(vector_inventory$Cassette4Terminator), selected = dt$Cassette4Terminator)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Terminator","", choices = c(vector_inventory$Cassette5Terminator), selected = dt$Cassette5Terminator)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Terminator","", choices = c('',vector_inventory$Cassette1Terminator), selected = dt$Cassette1Terminator)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Terminator","", choices = c('',vector_inventory$Cassette2Terminator), selected = dt$Cassette2Terminator)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Terminator","", choices = c('',vector_inventory$Cassette3Terminator), selected = dt$Cassette3Terminator)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Terminator","", choices = c('',vector_inventory$Cassette4Terminator), selected = dt$Cassette4Terminator)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Terminator","", choices = c('',vector_inventory$Cassette5Terminator), selected = dt$Cassette5Terminator)
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Feature1","", choices = c(vector_inventory$Cassette1Feature1), selected = dt$Cassette1Feature1)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Feature1","", choices = c(vector_inventory$Cassette2Feature1), selected = dt$Cassette2Feature1)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Feature1","", choices = c(vector_inventory$Cassette3Feature1), selected = dt$Cassette3Feature1)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Feature1","", choices = c(vector_inventory$Cassette4Feature1), selected = dt$Cassette4Feature1)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Feature1","", choices = c(vector_inventory$Cassette5Feature1), selected = dt$Cassette5Feature1)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Feature1","", choices = c('',vector_inventory$Cassette1Feature1), selected = dt$Cassette1Feature1)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Feature1","", choices = c('',vector_inventory$Cassette2Feature1), selected = dt$Cassette2Feature1)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Feature1","", choices = c('', vector_inventory$Cassette3Feature1), selected = dt$Cassette3Feature1)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Feature1","", choices = c('',vector_inventory$Cassette4Feature1), selected = dt$Cassette4Feature1)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Feature1","", choices = c('',vector_inventory$Cassette5Feature1), selected = dt$Cassette5Feature1)
 
   updateTextInput(session,"vector_inventory_2_Cassette1Feature1Desc","", value = vector_inventory$Cassette1Feature1Desc)
   updateTextInput(session,"vector_inventory_2_Cassette2Feature1Desc","", value = vector_inventory$Cassette2Feature1Desc)
@@ -1011,11 +1012,11 @@ observeEvent(input$vector_inventory_search_LoadDataToUpdate,{
   updateTextInput(session,"vector_inventory_2_Cassette4Feature1Desc","", value = vector_inventory$Cassette4Feature1Desc)
   updateTextInput(session,"vector_inventory_2_Cassette5Feature1Desc","", value = vector_inventory$Cassette5Feature1Desc)
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Feature2","", choices = c(vector_inventory$Cassette1Feature2), selected = dt$Cassette1Feature2)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Feature2"," ", choices = c(vector_inventory$Cassette2Feature2), selected = dt$Cassette2Feature2)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Feature2","", choices = c(vector_inventory$Cassette3Feature2), selected = dt$Cassette3Feature2)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Feature2"," ", choices = c(vector_inventory$Cassette4Feature2), selected = dt$Cassette4Feature2)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Feature2","", choices = c(vector_inventory$Cassette5Feature2), selected = dt$Cassette5Feature2)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Feature2","", choices = c('',vector_inventory$Cassette1Feature2), selected = dt$Cassette1Feature2)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Feature2"," ", choices = c('',vector_inventory$Cassette2Feature2), selected = dt$Cassette2Feature2)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Feature2","", choices = c('',vector_inventory$Cassette3Feature2), selected = dt$Cassette3Feature2)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Feature2"," ", choices = c('',vector_inventory$Cassette4Feature2), selected = dt$Cassette4Feature2)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Feature2","", choices = c('',vector_inventory$Cassette5Feature2), selected = dt$Cassette5Feature2)
 
   updateTextInput(session,"vector_inventory_2_Cassette1Feature2Desc","", value = vector_inventory$Cassette1Feature2Desc)
   updateTextInput(session,"vector_inventory_2_Cassette2Feature2Desc","", value = vector_inventory$Cassette2Feature2Desc)
@@ -1023,11 +1024,11 @@ observeEvent(input$vector_inventory_search_LoadDataToUpdate,{
   updateTextInput(session,"vector_inventory_2_Cassette4Feature2Desc","", value = vector_inventory$Cassette4Feature2Desc)
   updateTextInput(session,"vector_inventory_2_Cassette5Feature2Desc","", value = vector_inventory$Cassette5Feature2Desc)
 
-  updateSelectInput(session,"vector_inventory_2_Cassette1Feature3","", choices = c(vector_inventory$Cassette1Feature3), selected = dt$Cassette1Feature3)
-  updateSelectInput(session,"vector_inventory_2_Cassette2Feature3","", choices = c(vector_inventory$Cassette2Feature3), selected = dt$Cassette2Feature3)
-  updateSelectInput(session,"vector_inventory_2_Cassette3Feature3","", choices = c(vector_inventory$Cassette3Feature3), selected = dt$Cassette3Feature3)
-  updateSelectInput(session,"vector_inventory_2_Cassette4Feature3","", choices = c(vector_inventory$Cassette4Feature3), selected = dt$Cassette4Feature3)
-  updateSelectInput(session,"vector_inventory_2_Cassette5Feature3","", choices = c(vector_inventory$Cassette5Feature3), selected = dt$Cassette5Feature3)
+  updateSelectInput(session,"vector_inventory_2_Cassette1Feature3","", choices = c('',vector_inventory$Cassette1Feature3), selected = dt$Cassette1Feature3)
+  updateSelectInput(session,"vector_inventory_2_Cassette2Feature3","", choices = c('',vector_inventory$Cassette2Feature3), selected = dt$Cassette2Feature3)
+  updateSelectInput(session,"vector_inventory_2_Cassette3Feature3","", choices = c('',vector_inventory$Cassette3Feature3), selected = dt$Cassette3Feature3)
+  updateSelectInput(session,"vector_inventory_2_Cassette4Feature3","", choices = c('',vector_inventory$Cassette4Feature3), selected = dt$Cassette4Feature3)
+  updateSelectInput(session,"vector_inventory_2_Cassette5Feature3","", choices = c('',vector_inventory$Cassette5Feature3), selected = dt$Cassette5Feature3)
 
   updateTextInput(session,"vector_inventory_2_Cassette1Feature3Desc","", value = vector_inventory$Cassette1Feature3Desc)
   updateTextInput(session,"vector_inventory_2_Cassette2Feature3Desc","", value = vector_inventory$Cassette2Feature3Desc)
@@ -1120,19 +1121,19 @@ observeEvent(input$vector_inventory_search_LoadDataToUpdate,{
 
   # inventory 4
 
-  updateSelectInput(session, "vector_inventory_4_SequencingCompleted", "Sequencing Completed", choices = c(vector_inventory$SequencingCompleted), selected = dt$SequencingCompleted)
+  updateSelectInput(session, "vector_inventory_4_SequencingCompleted", "Sequencing Completed", choices = c('',vector_inventory$SequencingCompleted), selected = dt$SequencingCompleted)
   updateDateInput(session, "vector_inventory_4_DateOfSequencing", "Date of sequencing", value = vector_inventory$DateOfSequencing)
   updateNumericInput(session, "vector_inventory_4_SeqPrimersLabBookNumber", "Lab Book Number", value = vector_inventory$SeqPrimersLabBookNumber)
   updateNumericInput(session,"vector_inventory_4_SeqPrimersPageNumber", "Page Number", value = vector_inventory$SeqPrimersPageNumber)
   # fileInput("vector_inventory_4_ContigExpressSequencingAlignment", "")
   # fileInput("vector_inventory_4_SequencingFiles", "", multiple = F, placeholder = "Locate")
-  updateSelectInput(session, "vector_inventory_4_CheckedBy", "Checked By", choices = c(vector_inventory$CheckedBy), selected = dt$CheckedBy)
+  updateSelectInput(session, "vector_inventory_4_CheckedBy", "Checked By", choices = c('',vector_inventory$CheckedBy), selected = dt$CheckedBy)
   updateDateInput(session, "vector_inventory_4_CheckedDate", "Date", value = lubridate::ymd(vector_inventory$CheckedDate))
-  updateSelectInput(session, "vector_inventory_4_VerifiedBy", "Verified By", choices = c(vector_inventory$VerifiedBy), selected = dt$VerifiedBy)
+  updateSelectInput(session, "vector_inventory_4_VerifiedBy", "Verified By", choices = c('',vector_inventory$VerifiedBy), selected = dt$VerifiedBy)
   updateDateInput(session, "vector_inventory_4_VerifiedDate", "Date", value = lubridate::ymd(vector_inventory$VerifiedDate))
-  updateSelectInput(session, "vector_inventory_4_TranformedIntoAgro", "Tranformed Into Agro", choices = c(vector_inventory$TranformedIntoAgro), selected = dt$TranformedIntoAgro)
-  updateSelectInput(session, "vector_inventory_4_Strain", "Strain", choices = c(vector_inventory$Strain), selected = dt$Strain)
-  updateSelectInput(session, "vector_inventory_4_ConfirmedByPCR", "Confirmed by PCR", choices = c(vector_inventory$ConfirmedByPCR), selected = dt$ConfirmedByPCR)
+  updateSelectInput(session, "vector_inventory_4_TranformedIntoAgro", "Tranformed Into Agro", choices = c('',vector_inventory$TranformedIntoAgro), selected = dt$TranformedIntoAgro)
+  updateSelectInput(session, "vector_inventory_4_Strain", "Strain", choices = c('',vector_inventory$Strain), selected = dt$Strain)
+  updateSelectInput(session, "vector_inventory_4_ConfirmedByPCR", "Confirmed by PCR", choices = c('',vector_inventory$ConfirmedByPCR), selected = dt$ConfirmedByPCR)
   updateDateInput(session, "vector_inventory_4_ConfirmedByPCRDate", "Date",  value = lubridate::ymd(vector_inventory$ConfirmedByPCRDate))
 
   # inventory 5
@@ -1154,7 +1155,6 @@ observeEvent(input$vector_inventory_search_LoadDataToUpdate,{
 ## ------------------------------------------------------------------------ Save Update
 
 observeEvent(input$vector_inventory_5_UpdateThePlantExpressionVectorRecord,{
-  
   
   VectorID = paste0(input$vector_inventory_1_VectorPrefix,"-", input$vector_inventory_1_VectorCode, "-", input$vector_inventory_1_VectorSuffix)
   VectorPrefix = input$vector_inventory_1_VectorPrefix
@@ -1215,7 +1215,7 @@ observeEvent(input$vector_inventory_5_UpdateThePlantExpressionVectorRecord,{
   Cassette5Feature3Desc = ifelse(nchar(input$vector_inventory_2_Cassette5Feature3Desc)>0, input$vector_inventory_2_Cassette5Feature3Desc,'')
   VNTI_Map_Location = ifelse(!is.null(input$vector_inventory_1_VNTILocate), input$vector_inventory_1_VNTILocate,'')
   ClonedBy = ifelse(nchar(input$vector_inventory_1_ClonedBy)>0, input$vector_inventory_1_ClonedBy,'')
-  ClonedDate = input$vector_inventory_1_DateOfCloning
+  ClonedDate = as.Date(input$vector_inventory_1_DateOfCloning, origin="1970-01-01")
   LabBookNumber = input$vector_inventory_1_LabBookNumber
   PageNumber = input$vector_inventory_1_PageNumber
   Cassette1ForwardName = ifelse(nchar(input$vector_inventory_3_Cassette1ForwardName)>0, input$vector_inventory_3_Cassette1ForwardName,'')
@@ -1250,31 +1250,31 @@ observeEvent(input$vector_inventory_5_UpdateThePlantExpressionVectorRecord,{
   Cassette5ReverseSequence = ifelse(nchar(input$vector_inventory_3_Cassette5ReverseSequence)>0, input$vector_inventory_3_Cassette5ReverseSequence,'')
   SequencingPrimers = ifelse(nchar(input$vector_inventory_4_SequencingPrimers)>0, input$vector_inventory_4_SequencingPrimers,'')
   SequencingCompleted = ifelse(nchar(input$vector_inventory_4_SequencingCompleted)>0, input$vector_inventory_4_SequencingCompleted,'')
-  DateOfSequencing = input$vector_inventory_4_DateOfSequencing
+  DateOfSequencing = as.Date(input$vector_inventory_4_DateOfSequencing, origin="1970-01-01")
   SeqPrimersLabBookNumber = input$vector_inventory_4_SeqPrimersLabBookNumber
   SeqPrimersPageNumber = input$vector_inventory_4_SeqPrimersPageNumber
   ContigExpressSequencingAlignment = ifelse(!is.null(input$vector_inventory_4_ContigExpressSequencingAlignment), input$vector_inventory_4_ContigExpressSequencingAlignment,'')
   SequencingFiles = ifelse(!is.null(input$vector_inventory_4_SequencingFiles), input$vector_inventory_4_SequencingFiles,'')
   CheckedBy = ifelse(nchar(input$vector_inventory_4_CheckedBy)>0, input$vector_inventory_4_CheckedBy,'')
-  CheckedDate = input$vector_inventory_4_CheckedDate
+  CheckedDate = as.Date(input$vector_inventory_4_CheckedDate, origin="1970-01-01")
   VerifiedBy = ifelse(nchar(input$vector_inventory_4_VerifiedBy)>0, input$vector_inventory_4_VerifiedBy,'')
-  VerifiedDate = input$vector_inventory_4_VerifiedDate
+  VerifiedDate = as.Date(input$vector_inventory_4_VerifiedDate, origin="1970-01-01")
   TranformedIntoAgro = ifelse(nchar(input$vector_inventory_4_TranformedIntoAgro)>0, input$vector_inventory_4_TranformedIntoAgro,'')
   Strain = ifelse(nchar(input$vector_inventory_4_Strain)>0, input$vector_inventory_4_Strain,'')
   ConfirmedByPCR = ifelse(nchar(input$vector_inventory_4_ConfirmedByPCR)>0, input$vector_inventory_4_ConfirmedByPCR,'')
-  ConfirmedByPCRDate = input$vector_inventory_4_ConfirmedByPCRDate
+  ConfirmedByPCRDate = as.Date(input$vector_inventory_4_ConfirmedByPCRDate, origin="1970-01-01")
   DNAStorageLocation = ifelse(nchar(input$vector_inventory_5_DNAStorageLocation)>0, input$vector_inventory_5_DNAStorageLocation,'')
   DNAStorageBox = ifelse(nchar(input$vector_inventory_5_DNAStorageBox)>0, input$vector_inventory_5_DNAStorageBox,'')
   DNAStoredBy = ifelse(nchar(input$vector_inventory_5_DNAStoredBy)>0, input$vector_inventory_5_DNAStoredBy,'')
-  DNAStorageDate = input$vector_inventory_5_DNAStorageDate
+  DNAStorageDate = as.Date(input$vector_inventory_5_DNAStorageDate, origin="1970-01-01")
   EColiGlycerolStorageLocation = ifelse(nchar(input$vector_inventory_5_EcoliGlycerolStorageLocation)>0, input$vector_inventory_5_EcoliGlycerolStorageLocation,'')
   EColiGlycerolStorageBox = ifelse(nchar(input$vector_inventory_5_EcoliGlycerolStorageBox)>0, input$vector_inventory_5_EcoliGlycerolStorageBox,'')
   EColiGlycerolStoredBy = ifelse(nchar(input$vector_inventory_5_EcoliGlycerolStoredBy)>0, input$vector_inventory_5_EcoliGlycerolStoredBy,'')
-  EColiGlycerolStorageDate = input$vector_inventory_5_EcoliGlycerolStorageDate
+  EColiGlycerolStorageDate = as.Date(input$vector_inventory_5_EcoliGlycerolStorageDate, origin="1970-01-01")
   AgroGlycerolStorageLocation = ifelse(nchar(input$vector_inventory_5_AgroGlycerolStorageLocation)>0, input$vector_inventory_5_AgroGlycerolStorageLocation,'')
   AgroGlycerolStorageBox = ifelse(nchar(input$vector_inventory_5_AgroGlycerolStorageBox)>0, input$vector_inventory_5_AgroGlycerolStorageBox,'')
   AgroGlycerolStoredBy = ifelse(nchar(input$vector_inventory_5_AgroGlycerolStoredBy)>0, input$vector_inventory_5_AgroGlycerolStoredBy,'')
-  AgroGlycerolStorageDate = input$vector_inventory_5_AgroGlycerolStorageDate
+  AgroGlycerolStorageDate = as.Date(input$vector_inventory_5_AgroGlycerolStorageDate, origin="1970-01-01")
   Cassette6Promoter = ifelse(nchar(input$vector_inventory_2_Cassette6Promoter)>0, input$vector_inventory_2_Cassette6Promoter,'')
   Cassette6Gene = ifelse(nchar(input$vector_inventory_2_Cassette6Gene)>0, input$vector_inventory_2_Cassette6Gene,'')
   Cassette6Terminator = ifelse(nchar(input$vector_inventory_2_Cassette6Terminator)>0, input$vector_inventory_2_Cassette6Terminator,'')

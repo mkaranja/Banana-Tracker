@@ -308,16 +308,28 @@ observeEvent(input$search_transformation_ActionDelete,{
 observeEvent(input$transformation_module,{
   agrobacterium <- paste0(input$project_selected, "_tblAgrobacteriumStrains")
   vectorInventory <- paste0(input$project_selected, "_tblVectorInventory")
-  culturedBy <- loadData("tblUserInformation")
-  user <- paste(culturedBy[trimws(culturedBy$UserName) == input$userName,]$FirstName, culturedBy[trimws(culturedBy$userName) == input$userName,]$LastName)
- # if(input$transformation_module_tabs == "new_transformation"){
-    updateSelectInput(session, "new_transformation_TransformationType", "Transformation Type", choices = c("", transformation()$TransformationType))
-    updateSelectInput(session,"new_transformation_AgrobacteriumStrains", "Agrobacterium Strains", choices = c("", loadData(agrobacterium)$AgrobacteriumStrains))
-    updateSelectInput(session, "new_transformation_ParentIDType", "Parent ID Type", choices = c("", transformation()$IdentityType))
-    updateSelectInput(session, "new_transformation_ParentID","", choices = c("", transformation()$CSCIdentity))
-     # }
+ 
+  updateSelectInput(session,"new_transformation_AgrobacteriumStrains", "Agrobacterium Strains", choices = c("", loadData(agrobacterium)$AgrobacteriumStrains))
+  
 })
 
+# enable button
+# observe({
+#   if(input$new_transformation_ParentIDType !=""){
+#     shinyjs::toggleState(id = "new_transformation_ParentIDType_GetID", "", condition = mandatoryFilled)
+#   }
+# })
+
+
+observeEvent(input$new_transformation_ParentIDType_GetID,{
+  if(input$new_transformation_ParentIDType == "Cell Suspension Culture (CSC)"){
+  #  dt <- 
+  } else if(input$new_transformation_ParentIDType == "Explant") {
+    
+  }
+  dt <- 
+  updateSelectInput(session, "new_transformation_ParentID","", choices = c("", transformation()$CSCIdentity))
+})
 # load data
 new_transformation_input <- reactive({
   

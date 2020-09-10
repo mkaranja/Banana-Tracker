@@ -19,7 +19,7 @@ new_transformation <-
                   ),
                   column(12,
                          column(4, selectInput("new_transformation_ParentIDType", labelMandatory("Parent ID Type"), choices = c("Cell Suspension Culture (CSC)", "Explant"), multiple = F)),
-                         column(1, br(), tags$b("->>")),
+                         column(1, br(), actionBttn("new_transformation_ParentIDType_GetID", "", icon = icon("play", lib="font-awesome"))),
                          column(4, selectInput("new_transformation_ParentID", "", choices = c(""), multiple = F)), # CSCIdentity
                          column(2, br(), actionBttn("new_transformation_GetData", "Get Data", style = "fill", size = "xs", color = "primary", block = T))
                   ),

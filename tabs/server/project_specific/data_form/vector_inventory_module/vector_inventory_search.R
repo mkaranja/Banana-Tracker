@@ -36,7 +36,7 @@ vector_inventory_search <-
                 )), 
         fluidRow(
           tableOutput("tab")
-        ),hr(),
+        ),
         fluidRow(
           column(6),
           column(6,

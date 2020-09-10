@@ -316,7 +316,7 @@ observeEvent(input$new_culture_initiation_ClearForm,{
 
 observeEvent(input$new_culture_initiation_ClearForm_Confirm, {
   if(input$new_culture_initiation_ClearForm_Confirm == TRUE){
-   rest("new_culture_initiation_Form")
+   reset("new_culture_initiation_Form")
   }
 }, ignoreInit = TRUE)
 
