@@ -9,7 +9,7 @@ user_details <- tabPanel("User Details", value = "controlform_userdetails",
                      
                     fluidRow(
                       
-                      column(8, offset = 1,br(), br(), br(),
+                      column(8, br(), br(),
                              panel_div(class_type = "default",
                                  content = tags$div(
                                    uiOutput("userdetails_Output")

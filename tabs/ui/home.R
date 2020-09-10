@@ -10,7 +10,7 @@ home <- tabPanel(title = "HOME",
                  value = "home",
                  hr(),
                  br(), br(),br(),br(),
-                 HTML("<h1><center><b>BANANA TRACKER</b></center></h1>"),
+                 tags$p(style = "color: black; font-size: 72px; text-align: center;font-family: monospace;","BANANA TRACKER"),
                  HTML("<h3><center>Tracking the Banana Transgenics</center></h3>"),
                  br(), br(), br(), br(),
                  fluidRow(
@@ -18,11 +18,11 @@ home <- tabPanel(title = "HOME",
                  column(8,br(), br(), br(),br(), br(),
                         
                          column(width = 5, align = "center",
-                                actionBttn("control_form", label = "MFC, SPC and CSC Control Form", size = "lg", style = "gradient", color = "primary")
+                                actionBttn("control_form", label = "MFC, SPC and CSC Control Form", size = "lg", style = "jelly", color = "primary")
                          ),
                          column(2),
                          column(width = 5, align = "center",
-                                actionBttn("project_form", label = "To Banana Project Selection", size = "lg", style = "gradient", color = "warning")
+                                actionBttn("project_form", label = "To Banana Project Selection", size = "lg", style = "jelly", color = "warning")
                          )
                       )
                  )

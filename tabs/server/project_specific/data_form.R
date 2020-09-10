@@ -1,72 +1,126 @@
-# tab_files1 <- list.files(path = "tabs/server/project_specific/IBBTV/ui/vector_inventory_module", full.names = T, recursive = T)
-# tab_files2 <- list.files(path = "tabs/server/project_specific/IBBTV/ui/transformation_module", full.names = T, recursive = T)
-# suppressMessages(lapply(tab_files1, source))
-# suppressMessages(lapply(tab_files2, source))
+## Vector Inventory Data
 
-source("tabs/server/project_specific/IBBTV/ui/vector_inventory_module/vector_inventory1.R")
-source("tabs/server/project_specific/IBBTV/ui/vector_inventory_module/vector_inventory2.R")
-source("tabs/server/project_specific/IBBTV/ui/vector_inventory_module/vector_inventory3.R")
-source("tabs/server/project_specific/IBBTV/ui/vector_inventory_module/search.R")
-
-source("tabs/server/project_specific/IBBTV/ui/transformation_module/new_transformation.R")
-observeEvent(input$ibbtv_vector_inventory_module,{
+vector_inventory <- reactive({
+  tb <- paste0(input$project_selected, "_tblVectorInventory")
   
-  showModal(modalDialog(tags$h2(style="color:#800000;text-align:center;","Vector Inventory Module - IBBTV Project"),
-                        
-                        tabsetPanel(type = "pills", selected = "ibbtv_vector_inventory_1",
-                                    ibbtv_vector_inventory1,
-                                    ibbtv_vector_inventory2,
-                                    ibbtv_vector_inventory3,
-                                    ibbtv_search
-                                    ),easyClose = F, size = "l"
-  ))
+  # rearrange columns by length
+  sql <- paste("SELECT
+  Cassette1ForwardCode,Cassette1ReverseCode,Cassette2ForwardCode,Cassette2ReverseCode,Cassette3ForwardCode,Cassette3ReverseCode,Cassette4ForwardCode,Cassette4ReverseCode,Cassette5ForwardCode,
+  Cassette5ReverseCode,Cassette6ForwardCode,Cassette6ReverseCode,Cassette7ForwardCode,Cassette7ReverseCode,Cassette8ForwardCode,Cassette8ReverseCode,Cassette9ForwardCode,Cassette9ReverseCode,
+  Cassette10ForwardCode,Cassette10ReverseCode,VectorID,VectorPrefix,VectorCode,VectorSuffix,BacterialSelection,PlantSelection,Synonym1,Synonym2,Synonym3,Synonym4,Synonym5,Backbone,Cassette1Promoter,
+  Cassette1Gene,Cassette1Terminator,Cassette1Feature1,Cassette1Feature1Desc,Cassette1Feature2,Cassette1Feature2Desc,Cassette1Feature3,Cassette1Feature3Desc,Cassette2Promoter,Cassette2Gene,
+  Cassette2Terminator,Cassette2Feature1,Cassette2Feature1Desc,Cassette2Feature2,Cassette2Feature2Desc,Cassette2Feature3,Cassette2Feature3Desc,Cassette3Promoter,Cassette3Gene,Cassette3Terminator,
+  Cassette3Feature1,Cassette3Feature1Desc,Cassette3Feature2,Cassette3Feature2Desc,Cassette3Feature3,Cassette3Feature3Desc,Cassette4Promoter,Cassette4Gene,Cassette4Terminator,Cassette4Feature1,
+  Cassette4Feature1Desc,Cassette4Feature2,Cassette4Feature2Desc,Cassette4Feature3,Cassette4Feature3Desc,Cassette5Promoter,Cassette5Gene,Cassette5Terminator,Cassette5Feature1,Cassette5Feature1Desc,
+  Cassette5Feature2,Cassette5Feature2Desc,Cassette5Feature3,Cassette5Feature3Desc,ClonedBy,ClonedDate,LabBookNumber,PageNumber,Cassette1ForwardName,Cassette1ForwardSequence,Cassette1ReverseName,
+  Cassette1ReverseSequence,Cassette2ForwardName,Cassette2ForwardSequence,Cassette2ReverseName,Cassette2ReverseSequence,Cassette3ForwardName,Cassette3ForwardSequence,Cassette3ReverseName,
+  Cassette3ReverseSequence,Cassette4ForwardName,Cassette4ForwardSequence,Cassette4ReverseName,Cassette4ReverseSequence,Cassette5ForwardName,Cassette5ForwardSequence,Cassette5ReverseName,
+  Cassette5ReverseSequence,SequencingCompleted,DateOfSequencing,SeqPrimersLabBookNumber,SeqPrimersPageNumber,CheckedBy,CheckedDate,VerifiedBy,VerifiedDate,TranformedIntoAgro,Strain,ConfirmedByPCR,
+  ConfirmedByPCRDate,DNAStorageLocation,DNAStorageBox,DNAStoredBy,DNAStorageDate,EColiGlycerolStorageLocation,EColiGlycerolStorageBox,EColiGlycerolStoredBy,EColiGlycerolStorageDate,AgroGlycerolStorageLocation,
+  AgroGlycerolStorageBox,AgroGlycerolStoredBy,AgroGlycerolStorageDate,Cassette6Promoter,Cassette6Gene,Cassette6Terminator,Cassette6Feature1,Cassette6Feature1Desc,Cassette6Feature2,Cassette6Feature2Desc,
+  Cassette6Feature3,Cassette6Feature3Desc,Cassette7Promoter,Cassette7Gene,Cassette7Terminator,Cassette7Feature1,Cassette7Feature1Desc,Cassette7Feature2,Cassette7Feature2Desc,Cassette7Feature3,
+  Cassette7Feature3Desc,Cassette8Promoter,Cassette8Gene,Cassette8Terminator,Cassette8Feature1,Cassette8Feature1Desc,Cassette8Feature2,Cassette8Feature2Desc,Cassette8Feature3,Cassette8Feature3Desc,
+  Cassette9Promoter,Cassette9Gene,Cassette9Terminator,Cassette9Feature1,Cassette9Feature1Desc,Cassette9Feature2,Cassette9Feature2Desc,Cassette9Feature3,Cassette9Feature3Desc,Cassette10Promoter,
+  Cassette10Gene,Cassette10Terminator,Cassette10Feature1,Cassette10Feature1Desc,Cassette10Feature2,Cassette10Feature2Desc,Cassette10Feature3,Cassette10Feature3Desc,Cassette6ForwardName,Cassette6ForwardSequence,
+  Cassette6ReverseName,Cassette6ReverseSequence,Cassette7ForwardName,Cassette7ForwardSequence,Cassette7ReverseName,Cassette7ReverseSequence,Cassette8ForwardName,Cassette8ForwardSequence,Cassette8ReverseName,
+  Cassette8ReverseSequence,Cassette9ForwardName,Cassette9ForwardSequence,Cassette9ReverseName,Cassette9ReverseSequence,Cassette10ForwardName,Cassette10ForwardSequence,Cassette10ReverseName,Cassette10ReverseSequence,
+  SequencingPrimers,ContigExpressSequencingAlignment,SequencingFiles,VNTI_Map_Location
+  FROM ",tb)
   
+  dt <- dbGetQuery(pool,sql)
+  
+  dt %>%
+    dplyr::select(VectorID,VectorPrefix,VectorCode,VectorSuffix,BacterialSelection,PlantSelection,Synonym1,Synonym2,Synonym3,Synonym4,Synonym5,
+                  Backbone,Cassette1Promoter,Cassette1Gene,Cassette1Terminator,Cassette1Feature1,Cassette1Feature1Desc,Cassette1Feature2,Cassette1Feature2Desc,
+                  Cassette1Feature3,Cassette1Feature3Desc,Cassette2Promoter,Cassette2Gene,Cassette2Terminator,Cassette2Feature1,Cassette2Feature1Desc,
+                  Cassette2Feature2,Cassette2Feature2Desc,Cassette2Feature3,Cassette2Feature3Desc,Cassette3Promoter,Cassette3Gene,Cassette3Terminator,
+                  Cassette3Feature1,Cassette3Feature1Desc,Cassette3Feature2,Cassette3Feature2Desc,Cassette3Feature3,Cassette3Feature3Desc,Cassette4Promoter,
+                  Cassette4Gene,Cassette4Terminator,Cassette4Feature1,Cassette4Feature1Desc,Cassette4Feature2,Cassette4Feature2Desc,Cassette4Feature3,
+                  Cassette4Feature3Desc,Cassette5Promoter,Cassette5Gene,Cassette5Terminator,Cassette5Feature1,Cassette5Feature1Desc,Cassette5Feature2,
+                  Cassette5Feature2Desc,Cassette5Feature3,Cassette5Feature3Desc,VNTI_Map_Location,ClonedBy,ClonedDate,LabBookNumber,PageNumber,
+                  Cassette1ForwardName,Cassette1ForwardCode,Cassette1ForwardSequence,Cassette1ReverseName,Cassette1ReverseCode,Cassette1ReverseSequence,
+                  Cassette2ForwardName,Cassette2ForwardCode,Cassette2ForwardSequence,Cassette2ReverseName,Cassette2ReverseCode,Cassette2ReverseSequence,
+                  Cassette3ForwardName,Cassette3ForwardCode,Cassette3ForwardSequence,Cassette3ReverseName,Cassette3ReverseCode,Cassette3ReverseSequence,
+                  Cassette4ForwardName,Cassette4ForwardCode,Cassette4ForwardSequence,Cassette4ReverseName,Cassette4ReverseCode,Cassette4ReverseSequence,
+                  Cassette5ForwardName,Cassette5ForwardCode,Cassette5ForwardSequence,Cassette5ReverseName,Cassette5ReverseCode,Cassette5ReverseSequence,
+                  SequencingPrimers,SequencingCompleted,DateOfSequencing,SeqPrimersLabBookNumber,SeqPrimersPageNumber,ContigExpressSequencingAlignment,
+                  SequencingFiles,CheckedBy,CheckedDate,VerifiedBy,VerifiedDate,TranformedIntoAgro,Strain,ConfirmedByPCR,ConfirmedByPCRDate,
+                  DNAStorageLocation,DNAStorageBox,DNAStoredBy,DNAStorageDate,EColiGlycerolStorageLocation,EColiGlycerolStorageBox,EColiGlycerolStoredBy,
+                  EColiGlycerolStorageDate,AgroGlycerolStorageLocation,AgroGlycerolStorageBox,AgroGlycerolStoredBy,AgroGlycerolStorageDate,Cassette6Promoter,
+                  Cassette6Gene,Cassette6Terminator,Cassette6Feature1,Cassette6Feature1Desc,Cassette6Feature2,Cassette6Feature2Desc,Cassette6Feature3,
+                  Cassette6Feature3Desc,Cassette7Promoter,Cassette7Gene,Cassette7Terminator,Cassette7Feature1,Cassette7Feature1Desc,Cassette7Feature2,
+                  Cassette7Feature2Desc,Cassette7Feature3,Cassette7Feature3Desc,Cassette8Promoter,Cassette8Gene,Cassette8Terminator,Cassette8Feature1,
+                  Cassette8Feature1Desc,Cassette8Feature2,Cassette8Feature2Desc,Cassette8Feature3,Cassette8Feature3Desc,Cassette9Promoter,Cassette9Gene,
+                  Cassette9Terminator,Cassette9Feature1,Cassette9Feature1Desc,Cassette9Feature2,Cassette9Feature2Desc,Cassette9Feature3,Cassette9Feature3Desc,
+                  Cassette10Promoter,Cassette10Gene,Cassette10Terminator,Cassette10Feature1,Cassette10Feature1Desc,Cassette10Feature2,Cassette10Feature2Desc,
+                  Cassette10Feature3,Cassette10Feature3Desc,Cassette6ForwardName,Cassette6ForwardCode,Cassette6ForwardSequence,Cassette6ReverseName,
+                  Cassette6ReverseCode,Cassette6ReverseSequence,Cassette7ForwardName,Cassette7ForwardCode,Cassette7ForwardSequence,Cassette7ReverseName,
+                  Cassette7ReverseCode,Cassette7ReverseSequence,Cassette8ForwardName,Cassette8ForwardCode,Cassette8ForwardSequence,Cassette8ReverseName,
+                  Cassette8ReverseCode,Cassette8ReverseSequence,Cassette9ForwardName,Cassette9ForwardCode,Cassette9ForwardSequence,Cassette9ReverseName,
+                  Cassette9ReverseCode,Cassette9ReverseSequence,Cassette10ForwardName,Cassette10ForwardCode,Cassette10ForwardSequence,Cassette10ReverseName,
+                  Cassette10ReverseCode,Cassette10ReverseSequence)
 })
 
-observeEvent(input$ibbtv_transformation_module,{
- 
- showModal(modalDialog(tags$h2(style="color:#800000;text-align:center;","Transformation Module - IBBTV Project"),
-                       
-                       tabsetPanel(type = "pills", selected = "ibbtv_new_transformation",
-                                   ibbtv_new_transformation#,
-                                   # ibbtv_search_transformation,
-                                   # ibbtv_updating_last_subculture,
-                                   ),easyClose = F, size = "l"
- ))
- 
+vector_inventory_values <- reactiveValues()
+
+promoter <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblPromoter")) %>% collect()
 })
 
-# observeEvent(input$ibbtv_plant_tissue_culture_module,{
-#   
-#   showModal(modalDialog(tags$h2(style="color:#800000;text-align:center;","Plant Tissue Culture Module - IBBTV Project"),
-#                         
-#                         tabsetPanel( type = "pills", selected = ""),easyClose = F, size = "l"
-#   ))
-#   
-# })
-# 
-# observeEvent(input$ibbtv_plant_information_module,{
-#   
-#   showModal(modalDialog(tags$h2(style="color:#800000;text-align:center;","Plant Information Module - IBBTV Project"),
-#                         
-#                         tabsetPanel( type = "pills", selected = ""),easyClose = F, size = "l"
-#   ))
-#   
-# })
-# 
-# 
-# ## ------------------------------------------- 1. Vector Inventory Module ---------------------------------
-# 
-# observeEvent(input$vector_inventory_1_ClearAllTheTabs,{
-#   reset("vector_inventory_1_VectorID")
-#   reset("ibbtv_vector_inventory_1_form")
-# })
-# 
-# observeEvent(input$vector_inventory_1_VectorCode,{
-#   suffix_dt <- tbl(pool, "IBBTV_tblVectorSuffixIdentity") %>% collect()
-#   suffix <- max(as.integer(suffix_dt$VectorSuffixID))+1
-#   id <- paste0(input$vector_inventory_1_VectorPrefix, "-",toupper(input$vector_inventory_1_VectorCode),"-",suffix)
-#     
-#   updateTextInput("vector_inventory_1_VectorID", "Vector ID", value = as.character(id))
-#   updateTextInput("vector_inventory_1_VectorSuffix", "Vector Suffix", value = as.character(suffix))
-# })
+gene <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblGene")) %>% collect()
+})
+
+terminator <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblTerminator")) %>% collect()
+})
+backbone <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblBackbone")) %>% collect()
+})
+# PLANT TISSUE CULTURE MODILE DATA 
+PTC <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblPlantTissueCulture")) %>% collect()
+})
+deletedPTC <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblDeletedPlantTissueCulture")) %>% collect()
+})
+culturesPTC <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblCulturesPlantTissueCulture")) %>% collect()
+})
+# EXPLANT MODULE DATA
+explant_data <- reactive({
+  tbl(pool, paste0(input$project_selected,"_tblExplant")) %>% collect()
+})
+explant_val <- reactiveValues()
+
+# TRANSFORMATION DATA
+transformation <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblTransformation")) %>% collect()
+})
+transformation_values <- reactiveValues()
+
+cultureTransformation <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblCulturesTransformation")) %>% collect()
+})
+
+deletedTransformation <- reactive({
+  tbl(pool, paste0(input$project_selected, "_tblDeletedTransformation")) %>% collect()
+})
+deletedTransformation_values <- reactiveValues()
+
+
+## Inventory Module
+source("tabs/server/project_specific/data_form/vector_inventory_module.R", local=T)
+
+## Transformation Module
+source("tabs/server/project_specific/data_form/transformation_module.R", local=T)
+
+## PLant Tissue Culture Module
+source("tabs/server/project_specific/data_form/plant_tissue_culture_module.R", local=T)
+
+## Explant Module
+source("tabs/server/project_specific/data_form/explant_module.R", local=T)
+
+## Plant Information Module
+source("tabs/server/project_specific/data_form/plant_information_module.R", local=T)
+

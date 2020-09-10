@@ -13,21 +13,21 @@ admin_Additives_Modal <-  function(text){
                            tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
                            column(3, textInput("admin_Additives_AddNewAdditives", "Additives", value = "", width = "100%")),
                            column(6, textInput("admin_Additives_AddNewDescription", "Description",value = "", width = "100%")),
-                           column(2, br(), actionBttn("admin_Additives_AddNewIdentityType", "Add New Additives", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_Additives_AddNewIdentityType", "Add New", style = "jelly", size = "xs", color = "primary", block=T))
                     ),
                     column(10, offset = 1, 
                            column(3, disabled(textInput("admin_Additives_UpdateAdditives", "", value = "", width = "100%"))),
                            column(6, textInput("admin_Additives_UpdateDescription", "", value="", width = "100%")),
-                           column(2, br(), actionBttn("admin_Additives_UpdateIdentityType", "Update the Additives", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_Additives_UpdateIdentityType", "Update", style = "jelly", size = "xs", color = "primary", block=T))
                     )
                   )
               ), br(), br(),
               fluidRow(
                 column(10, offset = 1,
                        column(2, actionBttn("admin_Additives_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_Additives_Clear", "Clear", style = "jelly", size = "xs", color = "primary", block=T)),
+                       column(2, actionBttn("admin_Additives_Clear", "Clear", style = "jelly", size = "xs", color = "warning", block=T)),
                        column(2, actionBttn("admin_Additives_Refresh", "Refresh", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_Additives_MFC_SCP_CSC_ControlForm", "MFC SCP CSC ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
+                       column(2, actionBttn("admin_Additives_MFC_SCP_CSC_ControlForm", "ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
                 )
               ))
 }

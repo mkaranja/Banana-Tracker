@@ -2,20 +2,24 @@
 
 
 output$userdetails_Output <- renderUI({
-  cur_user <- usersinfo %>%
-    dplyr::filter(UserName == input$username)
+  
+  cur_user <-  tbl(pool, "tblUserInformation") %>%
+    collect %>%
+    dplyr::filter(UserName == input$userName)
   
   div(
     fluidRow(
       use_waitress(),
       column(4, offset = 1,
-             disabled(textInput("user_details_UserName", "User Name", value = input$username)),
+             disabled(textInput("user_details_UserName", "User Name", value = input$userName)),
              disabled(textInput("user_details_FirstName", "First Name", value = cur_user$FirstName)),
              disabled(textInput("user_details_LastName", "Last Name", value = cur_user$LastName)), br(),
       ),
       column(4, br(),br(),br(),
-             passwordInput("user_details_NewPassword", "New Password"),
-             passwordInput("user_details_ConfirmNewPassword", "Confirm New Password"),
+             div(id = "reset_pwd",
+               passwordInput("user_details_NewPassword", "New Password"),
+               passwordInput("user_details_ConfirmNewPassword", "Confirm New Password")
+             ),
              actionBttn("user_details_ChangePassword", "Change Password", color = "primary", style = "jelly", size="xs")
       )
     )
@@ -31,19 +35,22 @@ observeEvent(input$user_details_ChangePassword,{
     input$user_details_ConfirmNewPassword
   )
   if((input$user_details_NewPassword == input$user_details_ConfirmNewPassword)){
-    pwd <- password_store(input$user_details_NewPassword)
+    pwd <- hashPassword(input$user_details_NewPassword)# password_store
     user <- input$user_details_UserName
     
-     waitress$notify()
-     for(i in 1:10){
-       waitress$inc(1) # increase by 10%
-       Sys.sleep(.3)
-     }
+     # waitress$notify()
+     # for(i in 1:10){
+     #   waitress$inc(1) # increase by 10%
+     #   Sys.sleep(.3)
+     # }
     
     sql <- "UPDATE tblUserInformation SET Password = ?pw WHERE UserName = ?id1;"
     query <- sqlInterpolate(pool, sql, pw = pwd, id1 = user)
     dbExecute(pool, query)
-    waitress$close() # hide when done
+    
+    shinyalert(title = "Success!", text = "Password has been updated", type = "success")
+    reset("reset_pwd")
+    # waitress$close() # hide when done
   } else {
     showNotification(tags$h5(style = "font-color:red;","! Passwords must match"))
   }

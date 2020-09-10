@@ -13,21 +13,21 @@ admin_PermitType_Modal <-  function(text){
                            tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
                            column(3, textInput("admin_PermitType_AddNewPermitType", "Permit Type", value = "", width = "100%")),
                            column(6, textInput("admin_PermitType_AddNewDescription", "Description",value = "", width = "100%")),
-                           column(2, br(), actionBttn("admin_PermitType_AddNewIdentityType", "Add New Permit Type", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_PermitType_AddNewIdentityType", "Add New", style = "jelly", size = "xs", color = "primary", block=T))
                     ),
                     column(10, offset = 1, 
                            column(3, disabled(textInput("admin_PermitType_UpdatePermitType", "", value = "", width = "100%"))),
                            column(6, textInput("admin_PermitType_UpdateDescription", "", value="", width = "100%")),
-                           column(2, br(), actionBttn("admin_PermitType_UpdateIdentityType", "Update the Permit Type", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_PermitType_UpdateIdentityType", "Update", style = "jelly", size = "xs", color = "primary", block=T))
                     )
                   )
               ), br(), br(),
               fluidRow(
                 column(10, offset = 1,
                        column(2, actionBttn("admin_PermitType_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_PermitType_Clear", "Clear", style = "jelly", size = "xs", color = "primary", block=T)),
+                       column(2, actionBttn("admin_PermitType_Clear", "Clear", style = "jelly", size = "xs", color = "warning", block=T)),
                        column(2, actionBttn("admin_PermitType_Refresh", "Refresh", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_PermitType_MFC_SCP_CSC_ControlForm", "MFC SCP CSC ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
+                       column(2, actionBttn("admin_PermitType_MFC_SCP_CSC_ControlForm", "ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
                 )
               ))
 }

@@ -16,13 +16,14 @@ observeEvent(input$project_specific_admin_AgrobacteriumStrains, {
 
 loadAgrobacteriumStrains <- reactive({
   tb <- paste0(input$project_selected, "_tblAgrobacteriumStrains")
-  pool %>% tbl(tb) %>% collect()
+  tbl(pool, tb)
 })
 
 AgrobacteriumStrainsCV <- reactiveValues()
 
 output$project_specific_admin_AgrobacteriumStrains_Table <- renderRHandsontable({
-  dt <- AgrobacteriumStrainsCV$Data <- loadAgrobacteriumStrains()
+   tb <- paste0(input$project_selected, "_tblAgrobacteriumStrains")
+  dt <- loadData(tb)
   rhandsontable(dt, selectCallback = TRUE, readOnly = FALSE, rowHeaders=F) %>%
     hot_table(stretchH = "all")
 })

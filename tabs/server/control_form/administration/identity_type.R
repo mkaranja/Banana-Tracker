@@ -13,21 +13,21 @@ admin_IdentityType_Modal <-  function(text){
                            tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
                            column(3, textInput("admin_IdentityType_AddNewIdentityType", "Identity Type", width = "100%")),
                            column(6, textInput("admin_IdentityType_AddNewDescription", "Description", width = "100%")),
-                           column(2, br(), actionBttn("admin_IdentityType_AddNewIdentityType", "Add New Identity Type", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_IdentityType_AddNewIdentityType", "Add New", style = "jelly", size = "xs", color = "primary", block=T))
                     ),
                     column(10, offset = 1, 
                            column(3, disabled(textInput("admin_IdentityType_UpdateIdentityType", "", width = "100%"))),
                            column(6, textInput("admin_IdentityType_UpdateDescription", "", width = "100%")),
-                           column(2, br(), actionBttn("admin_IdentityType_UpdateIdentityType", "Update the Identity Type", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_IdentityType_UpdateIdentityType", "Update", style = "jelly", size = "xs", color = "primary", block=T))
                     )
                   )
               ), br(), br(),
               fluidRow(
                 column(10, offset = 1,
                        column(2, actionBttn("admin_IdentityType_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_IdentityType_Clear", "Clear", style = "jelly", size = "xs", color = "primary", block=T)),
+                       column(2, actionBttn("admin_IdentityType_Clear", "Clear", style = "jelly", size = "xs", color = "warning", block=T)),
                        column(2, actionBttn("admin_IdentityType_Refresh", "Refresh", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_IdentityType_MFC_SCP_CSC_ControlForm", "MFC SCP CSC ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
+                       column(2, actionBttn("admin_IdentityType_MFC_SCP_CSC_ControlForm", "ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
                 )
               ))
 }
@@ -41,7 +41,7 @@ observeEvent(input$admin_IdentityType, {
 # reactive values
 
 loadIdentityType <- reactive({
-  pool %>% tbl("tblIdentityType") %>% collect()
+   pool %>% tbl("tblIdentityType") %>% collect()
 })
 
 CV <- reactiveValues()

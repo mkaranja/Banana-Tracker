@@ -13,21 +13,21 @@ admin_Cultivar_Modal <-  function(text){
                     tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
                     column(3, textInput("admin_Cultivar_AddNewCultivar", "Cultivar", value = "", width = "100%")),
                     column(6, textInput("admin_Cultivar_AddNewDescription", "Description",value = "", width = "100%")),
-                    column(2, br(), actionBttn("admin_Cultivar_AddNewIdentityType", "Add New Cultivar", style = "jelly", size = "xs", color = "primary", block=T))
+                    column(2, br(), actionBttn("admin_Cultivar_AddNewIdentityType", "Add New", style = "jelly", size = "xs", color = "primary", block=T))
              ),
              column(10, offset = 1, 
                     column(3, disabled(textInput("admin_Cultivar_UpdateCultivar", "", value = "", width = "100%"))),
                     column(6, textInput("admin_Cultivar_UpdateDescription", "", value="", width = "100%")),
-                    column(2, br(), actionBttn("admin_Cultivar_UpdateIdentityType", "Update the Cultivar", style = "jelly", size = "xs", color = "primary", block=T))
+                    column(2, br(), actionBttn("admin_Cultivar_UpdateIdentityType", "Update", style = "jelly", size = "xs", color = "primary", block=T))
              )
            )
            ), br(), br(),
          fluidRow(
            column(10, offset = 1,
                   column(2, actionBttn("admin_Cultivar_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "primary", block=T)),
-                  column(2, actionBttn("admin_Cultivar_Clear", "Clear", style = "jelly", size = "xs", color = "primary", block=T)),
+                  column(2, actionBttn("admin_Cultivar_Clear", "Clear", style = "jelly", size = "xs", color = "warning", block=T)),
                   column(2, actionBttn("admin_Cultivar_Refresh", "Refresh", style = "jelly", size = "xs", color = "primary", block=T)),
-                  column(2, actionBttn("admin_Cultivar_MFC_SCP_CSC_ControlForm", "MFC SCP CSC ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
+                  column(2, actionBttn("admin_Cultivar_MFC_SCP_CSC_ControlForm", "ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
            )
          ))
 }

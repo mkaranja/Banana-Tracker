@@ -22,13 +22,14 @@ project_selection <-
        )
      ), br(),
    conditionalPanel(
-     condition = "input.project_selection_selected",
+     condition = "input.project_selected",
      
     fluidRow(
+      
       tabsetPanel(type="pills",
         tabPanel("Data Form", value = "select_project_specific_DataForm",
-             fluidRow(br(),br(),br(),br(),
-                  column(6, 
+             fluidRow(br(),br(),br(),br(),br(),br(),
+                  column(8, 
                          column(4,
                          actionBttn("vector_inventory_module", "Vector Inventory Module", 
                                     style = "unite", color = "primary", size = "md", block = T)),
@@ -49,15 +50,16 @@ project_selection <-
                  )
                )  
              ),
-        tabPanel("Administration",
+        tabPanel("Administration", value = "project_specific_administration",
                  br(), br(), 
                  fluidRow(
                    
-                   column(12, align = "center",
+                   column(9, align = "center",
                           
                         panel_div(class_type = "default",
-                                  content = tags$div(
+                                  content = tags$div(#"Plant Expression Vector Module",
                             column(12,
+                                   
                                    column(3,
                                           actionBttn("project_specific_admin_BacterialSelection", label = "Bacterial Selection",  style = "unite", size = "md", color = "primary", block=T), br(), br(),
                                           actionBttn("project_specific_admin_Gene", label = "Gene",  style = "unite", size = "md", color = "primary", block=T)
@@ -92,61 +94,69 @@ project_selection <-
                                                 disabled(actionBttn("project_specific_admin_DIRLicence", label = "DIR Licence",  style = "unite", size = "md", color = "primary", block=T))
                                          )
                               ))
-                            
                         ) 
-                        
                     )
                    )
                  ),
-        tabPanel("Reports"),
-        tabPanel("User Details")
+        tabPanel("Reports", value = "project_specific_reports",
+                 column(8, br(), br(),br(),
+                
+                        fluidRow(
+                          
+                               column(4, 
+                                      actionBttn("transformation_reports", "Transformation Reports", 
+                                                 style = "unite", color = "primary", size = "md", block = T)
+                               ),
+                               
+                               column(4, 
+                                      actionBttn("plant_tissue_culture_reports", "Plant Tissue Culture Report", 
+                                                 style = "unite", color = "primary", size = "md", block = T)
+                               ),
+                               
+                               column(4, 
+                                      actionBttn("FT_Number_Reports", "FT Number Report", 
+                                                 style = "unite", color = "primary", size = "md", block = T)
+                               )
+                            ), br(),br(),br(),br(),
+                        fluidRow(
+                          column(4, 
+                                 actionBttn("new_plant_in_plant_tissue_culture_report", "New Plant in Plant Tissue Culture Report", 
+                                            style = "unite", color = "primary", size = "md", block = T)
+                          ),
+                          column(4, 
+                                 actionBttn("explant_reports", "Explant Reports", 
+                                            style = "unite", color = "primary", size = "md", block = T)
+                            ),
+                          column(4, 
+                                 actionBttn("plant_information_reports", "Plant Information Report", 
+                                            style = "unite", color = "primary", size = "md", block = T)
+                            )
+                          ), br(),br(),br(),br(),
+                        fluidRow(
+                               
+                               column(4, offset = 4,
+                                      actionBttn("tracing_module", "Tracing Module", 
+                                                 style = "unite", color = "primary", size = "md", block = T)
+                               )
+                             )
+                           )
+                      ),
+        tabPanel("User Details", value = "project_specific_user_details",
+                 
+                 fluidRow(
+                   
+                   column(8, br(), br(),
+                          panel_div(class_type = "default",
+                                    content = tags$div(
+                                      uiOutput("userdetails_ProjectSpecific_Output")
+                                    )
+                                    
+                          )
+                   )
+                 )
+                )
       )
     )
    )
-       #uiOutput("select_project_specific") 
-           #   ),
-           #   hidden(
-           #     div(id = "project_selection_selected_ibxw",
-           #         panel_div(class_type = "default",
-           #             content = tags$div(
-           #                 tabsetPanel(type = "unites",
-           #                   tabPanel("Data Form"),
-           #                   tabPanel("Reports")
-           #                 )
-           #                 )
-           #         )
-           #     )
-           #     
-           #   ),
-           #   
-           #   hidden(
-           #     div(id = "project_selection_selected_ibsv",
-           #         panel_div(class_type = "default",
-           #             content = tags$div(
-           #                 tabsetPanel(type = "unites",
-           #                     tabPanel("Data Form"),
-           #                     tabPanel("Reports")
-           #                 )
-           #               )
-           #         )
-           #     )
-           #     
-           #   ),
-           #   
-           #   hidden(
-           #     div(id = "project_selection_selected_nematode",
-           #         panel_div(class_type = "default",
-           #             content = tags$div(
-           #               tabsetPanel(type = "unites",
-           #                   tabPanel("Data Form"),
-           #                   tabPanel("Reports")
-           #               )
-           #               )
-           #         )
-           #     
-           #   )
-           #   
-           # )
-           
   )
 

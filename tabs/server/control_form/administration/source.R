@@ -13,21 +13,21 @@ admin_Source_Modal <-  function(text){
                            tags$style(type="text/css", "#table1 th {font-weight:bold;}"), br(),
                            column(3, textInput("admin_Source_AddNewSource", "Source", value = "", width = "100%")),
                            column(6, textInput("admin_Source_AddNewDescription", "Description",value = "", width = "100%")),
-                           column(2, br(), actionBttn("admin_Source_AddNewIdentityType", "Add New Source", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_Source_AddNewIdentityType", "Add New", style = "jelly", size = "xs", color = "primary", block=T))
                     ),
                     column(10, offset = 1, 
                            column(3, disabled(textInput("admin_Source_UpdateSource", "", value = "", width = "100%"))),
                            column(6, textInput("admin_Source_UpdateDescription", "", value="", width = "100%")),
-                           column(2, br(), actionBttn("admin_Source_UpdateIdentityType", "Update the Source", style = "jelly", size = "xs", color = "primary", block=T))
+                           column(2, br(), actionBttn("admin_Source_UpdateIdentityType", "Update", style = "jelly", size = "xs", color = "primary", block=T))
                     )
                   )
               ), br(), br(),
               fluidRow(
                 column(10, offset = 1,
                        column(2, actionBttn("admin_Source_FormToPicture", "Form to Picture", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_Source_Clear", "Clear", style = "jelly", size = "xs", color = "primary", block=T)),
+                       column(2, actionBttn("admin_Source_Clear", "Clear", style = "jelly", size = "xs", color = "warning", block=T)),
                        column(2, actionBttn("admin_Source_Refresh", "Refresh", style = "jelly", size = "xs", color = "primary", block=T)),
-                       column(2, actionBttn("admin_Source_MFC_SCP_CSC_ControlForm", "MFC SCP CSC ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
+                       column(2, actionBttn("admin_Source_MFC_SCP_CSC_ControlForm", "ControlForm", style = "jelly", size = "xs", color = "warning", block=T))
                 )
               ))
 }
@@ -41,7 +41,7 @@ observeEvent(input$admin_Source, {
 # reactive values
 
 loadSource <- reactive({
-  pool %>% tbl("tblSource") %>% collect()
+  tbl(pool, "tblSource") %>% collect()
 })
 
 CV <- reactiveValues()
