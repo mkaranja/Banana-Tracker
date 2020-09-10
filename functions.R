@@ -1,3 +1,10 @@
+labelMandatory <- function(label) {
+  tagList(
+    label,
+    span("*", class = "mandatory_star")
+  )
+}
+
 
 bsModalNoClose <-function(...) {
   b = bsModal(...)
@@ -9,23 +16,19 @@ bsModalNoClose <-function(...) {
 
 # https://calligross.de/post/using-cookie-based-authentication-with-shiny/
 
-addResourcePath("js", "www")
-
-if (!dir.exists('www/')) {
-  dir.create('www')
-}
-
+# if (!dir.exists('www/')) {
+#   dir.create('www')
+# }
+# 
 # download.file(
 #   url = 'https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js',
 #   destfile = 'www/js.cookie.js'
 # )
-
-addResourcePath("js", "www")
+# 
+# addResourcePath("js", "www")
 
 # This would usually come from your user database. But we want to keep it simple.
-password_hash <- bcrypt::hashpw('secret123') # Never store passwords as clear text
 sessionid <- "OQGYIrpOvV3KnOpBSPgOhqGxz2dE5A9IpKhP6Dy2kd7xIQhLjwYzskn9mIhRAVHo" # Our not so random sessionid
-
 
 jsCode <- '
   shinyjs.getcookie = function(params) {
@@ -37,12 +40,10 @@ jsCode <- '
       Shiny.onInputChange("jscookie", cookie);
     }
   }
-
   shinyjs.setcookie = function(params) {
-    Cookies.set("id", escape(params), { expires: 0.5 });  
+    Cookies.set("id", escape(params), { expires: 0.5 });
     Shiny.onInputChange("jscookie", params);
   }
-
   shinyjs.rmcookie = function(params) {
     Cookies.remove("id");
     Shiny.onInputChange("jscookie", "");
