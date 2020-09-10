@@ -21,13 +21,20 @@ library(janitor)
 source("functions.R")
 source("dbQueries.R")
 
-pool <- dbConnect(odbc::odbc(),
-                  Driver = "SQL Server",
-                  Server = "localhost\\SQLEXPRESS",
-                  Database = "IITA_banana",
-                  Trusted_Connection = "True"
-)
+# pool <- dbConnect(odbc::odbc(),
+#                   Driver = "SQL Server",
+#                   Server = "localhost\\SQLEXPRESS",
+#                   Database = "IITA_banana",
+#                   Trusted_Connection = "True"
+# )
 
+pool <- dbConnect(odbc(),
+                  Driver = "ODBC Driver 17 for SQL Server",
+                  Server = "52.212.46.173\\SQLEXPRESS,41433",
+                  Database = "IITABANANA",
+                  UID = "mkaranja",
+                  PWD = "a1s2d3"
+)
 # Tabs
 tab_files <- list.files(path = "tabs/ui", full.names = T, recursive = T)
 suppressMessages(lapply(tab_files, source))

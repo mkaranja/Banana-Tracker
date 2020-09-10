@@ -4,13 +4,13 @@
 #                   Database = "IITA_banana",
 #                   Trusted_Connection = "True"
 # )
-# pool <- dbConnect(odbc(),
-#                  Driver = "ODBC Driver 17 for SQL Server",
-#                  Server = "52.212.46.173\\SQLEXPRESS,41433",
-#                  Database = "IITABANANA",
-#                  UID = "mkaranja",
-#                  PWD = "a1s2d3"
-#                  )
+pool <- dbConnect(odbc(),
+                 Driver = "ODBC Driver 17 for SQL Server",
+                 Server = "52.212.46.173\\SQLEXPRESS,41433",
+                 Database = "IITABANANA",
+                 UID = "mkaranja",
+                 PWD = "a1s2d3"
+                 )
 # Load Data
 loadData <- function(table) {
   db <- dbConnect(odbc::odbc(),
