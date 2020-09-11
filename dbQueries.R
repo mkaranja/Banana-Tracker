@@ -1,24 +1,25 @@
 # pool <- dbConnect(odbc::odbc(),
 #                   Driver = "SQL Server",
 #                   Server = "localhost\\SQLEXPRESS",
-#                   Database = "IITA_banana",
+#                   Database = "***",
 #                   Trusted_Connection = "True"
 # )
 pool <- dbConnect(odbc(),
                  Driver = "ODBC Driver 17 for SQL Server",
-                 Server = "52.212.46.173\\SQLEXPRESS,41433",
-                 Database = "IITABANANA",
-                 UID = "mkaranja",
-                 PWD = "a1s2d3"
+                 Server = "****\\SQLEXPRESS,41433",
+                 Database = "***",
+                 UID = "***",
+                 PWD = "***"
                  )
 # Load Data
 loadData <- function(table) {
-  db <- dbConnect(odbc::odbc(),
-                    Driver = "SQL Server",
-                    Server = "localhost\\SQLEXPRESS",
-                    Database = "IITA_banana",
-                    Trusted_Connection = "True"
-  )
+  db <- dbConnect(odbc(),
+                 Driver = "ODBC Driver 17 for SQL Server",
+                 Server = "****\\SQLEXPRESS,41433",
+                 Database = "***",
+                 UID = "***",
+                 PWD = "***"
+                 )
   
   query <- sprintf("SELECT * FROM %s", table)
   data <- dbGetQuery(db, query)
@@ -28,12 +29,13 @@ loadData <- function(table) {
 
 # Save New Record
 saveData <- function(data, table) {
-  db <- dbConnect(odbc::odbc(),
-                  Driver = "SQL Server",
-                  Server = "localhost\\SQLEXPRESS",
-                  Database = "IITA_banana",
-                  Trusted_Connection = "True"
-  )
+  db <- dbConnect(odbc(),
+                 Driver = "ODBC Driver 17 for SQL Server",
+                 Server = "****\\SQLEXPRESS,41433",
+                 Database = "***",
+                 UID = "***",
+                 PWD = "***"
+                 )
   query <- sprintf(
     "INSERT INTO %s (%s) VALUES ('%s')",
     table, 
@@ -47,12 +49,13 @@ saveData <- function(data, table) {
 
 # Update Record
 updateData <- function(data, table) {
-  db <- dbConnect(odbc::odbc(),
-                  Driver = "SQL Server",
-                  Server = "localhost\\SQLEXPRESS",
-                  Database = "IITA_banana",
-                  Trusted_Connection = "True"
-  )
+  db <- dbConnect(odbc(),
+                 Driver = "ODBC Driver 17 for SQL Server",
+                 Server = "****\\SQLEXPRESS,41433",
+                 Database = "***",
+                 UID = "***",
+                 PWD = "***"
+                 )
   query <- sprintf(
     "INSERT INTO %s (%s) VALUES ('%s')",
     table, 
